@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>제목 · IR Deck</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+/* ══════════════════════════════════════════════════════════════
+   do-genpt-hotplx — 네이비·러스트 IR 덱
+   ──────────────────────────────────────────────────────────────
+   ⚠ 절대 규칙: 이 파일의 모든 치수는 .canvas 의 base font-size 에 대한
+     em 이다. px 로 크기를 쓰면 모바일 autofit 이 그 서브트리에서 실패한다.
+     새 컴포넌트를 추가할 때도 em 만 쓴다. (테두리 1px 은 예외)
+   ══════════════════════════════════════════════════════════════ */
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --navy:#1B2A4A;
+  --panel:#22335A;
+  --rust:#9C4A34;
+  --white:#FFFFFF;
+  --muted:#5E7099;
+  --line-l:#E8E9EC;
+  --stage:#0E1626;          /* 캔버스 바깥 무대 */
+}
+
+html,body{height:100%;background:var(--stage)}
+body{
+  scroll-snap-type:y mandatory;overflow-y:scroll;scroll-behavior:smooth;
+  -webkit-font-smoothing:antialiased;
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  word-break:keep-all;
+}
+
+.slide{
+  height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+
+/* ── 고정 캔버스 : 960×540, 뷰포트에 맞춰 스케일 ───────────────── */
+.canvas{
+  position:relative;flex:none;
+  width:960px;height:540px;
+  font-size:16px;                    /* ← 모든 em 의 기준 */
+  transform:scale(var(--k,1));transform-origin:center center;
+  box-shadow:0 1.125em 3.75em rgba(0,0,0,.45);
+  padding:2.75em 3em 2.5em;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+
+/* ── 다크 / 라이트 모드 : 토큰만 뒤집는다 ─────────────────────── */
+.canvas.is-dark{
+  --bg:var(--navy); --fg:var(--white); --sub:#A9B6D0;
+  --card:var(--panel); --line:rgba(255,255,255,.15); --bar:var(--rust);
+}
+.canvas.is-light{
+  --bg:var(--white); --fg:var(--navy); --sub:var(--muted);
+  --card:var(--white); --line:var(--line-l); --bar:var(--navy);
+}
+.canvas{background:var(--bg);color:var(--fg)}
+
+/* ── 타입 스케일 (전부 em) ───────────────────────────────────── */
+.kicker{
+  font-size:.6875em;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--rust);margin-bottom:.9em;
+}
+.is-dark .kicker{color:#C97B5F}
+h1{font-size:1.5em;font-weight:700;line-height:1.34;letter-spacing:-.02em;margin-bottom:.42em}
+.display{font-size:2em;font-weight:600;line-height:1.3;letter-spacing:-.025em;margin-bottom:.5em}
+.lead{font-size:.875em;font-weight:400;line-height:1.6;color:var(--sub);margin-bottom:1.6em}
+.hairline{height:1px;background:var(--line);margin:.9em 0}
+.fine{font-size:.625em;font-style:italic;color:var(--sub);line-height:1.6;text-align:center}
+
+/* ── 본문 영역 : 헤더와 푸터 사이를 채운다 ──────────────────── */
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+
+/* ── 강조 바 : 한 슬라이드에 하나만 ─────────────────────────── */
+.statement-bar{
+  background:var(--bar);color:#fff;border-radius:.35em;
+  padding:.95em 1.4em;text-align:center;
+  font-size:.8125em;font-weight:600;line-height:1.5;
+  margin-top:1.3em;
+}
+.statement-bar .hl{color:#F0A88E}
+.is-light .statement-bar .hl{color:#E8A48C}
+
+/* ── 카드 ───────────────────────────────────────────────────── */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:.4em;
+  padding:1.1em 1.15em;
+}
+.card-title{font-size:.9375em;font-weight:600;margin-bottom:.6em;line-height:1.35}
+.card p{font-size:.75em;line-height:1.65;color:var(--sub)}
+.card .accent{color:var(--rust);font-weight:600}
+
+.grid{display:grid;gap:1em}
+.grid-2{grid-template-columns:1fr 1fr}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+
+/* ── 번호 ①②③④ ───────────────────────────────────────────── */
+.num{font-size:1em;font-weight:700;color:var(--rust);margin-right:.35em}
+
+/* ── t-cover : 표지 ─────────────────────────────────────────── */
+.brand{font-size:1.75em;font-weight:800;letter-spacing:.06em;margin-bottom:.5em}
+.cover-meta{
+  font-size:.6875em;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--sub);margin-bottom:2.2em;
+}
+
+/* ── t-flow : ①②③④ 가로 단계 ───────────────────────────────── */
+.flow{display:flex;align-items:stretch;gap:.5em}
+.flow .step{
+  flex:1;background:var(--card);border:1px solid var(--line);
+  border-radius:.4em;padding:1em .95em;
+}
+.flow .step.on{border-color:var(--rust);border-width:1.5px}
+/* 화살표는 글자를 pseudo 로 넣는다. 모바일에서 rotate 를 쓰면
+   트랜스폼이 scrollable overflow 에 잡혀 autofit 이 오작동한다. */
+.flow .arw{display:flex;align-items:center;justify-content:center;color:var(--rust);font-size:.875em}
+.flow .arw::before{content:"→"}
+.step-head{font-size:.875em;font-weight:600;margin-bottom:.45em}
+.step-sub{font-size:.6875em;color:var(--sub);line-height:1.55;margin-bottom:.6em}
+.step ul{list-style:none}
+.step li{font-size:.6875em;color:var(--sub);line-height:1.85;padding-left:.7em;position:relative}
+.step li::before{content:"·";position:absolute;left:0}
+.badge{
+  display:inline-block;background:var(--rust);color:#fff;
+  font-size:.5625em;font-weight:600;border-radius:1em;
+  padding:.3em .8em;margin-left:.5em;vertical-align:middle;
+}
+
+/* ── t-duo : 2축 대비 / 순환 ────────────────────────────────── */
+.pane{
+  flex:1;background:var(--card);border:1px solid var(--line);
+  border-radius:.4em;padding:1.15em 1.2em;
+}
+.pane-label{
+  font-size:.6875em;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--rust);margin-bottom:.8em;
+}
+.pane ul{list-style:none}
+.pane li{font-size:.75em;line-height:1.9;color:var(--sub)}
+.loop{text-align:center;font-size:.75em;color:var(--sub);line-height:1.9}
+.loop .mark{color:var(--rust);font-weight:700}
+
+/* ── t-bm : 네이비 헤더 3열 (라이트 슬라이드의 시그니처) ─────── */
+.bm{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1em}
+.bm-col{border:1px solid var(--line);border-radius:.4em;overflow:hidden}
+.bm-head{
+  background:var(--navy);color:#fff;text-align:center;
+  font-size:.875em;font-weight:600;padding:.85em .6em;
+}
+.bm-body{padding:1em 1.05em}
+.bm-claim{font-size:.75em;font-weight:600;line-height:1.55;margin-bottom:.8em;color:var(--fg)}
+.bm-row{display:flex;gap:.9em;padding:.5em 0;border-top:1px solid var(--line)}
+.bm-row .k{flex:0 0 3.6em;font-size:.6875em;color:var(--sub)}
+.bm-row .v{flex:1;font-size:.6875em;line-height:1.6;color:var(--fg)}
+.bm-row.hot .k,.bm-row.hot .v{color:var(--rust);font-weight:600}
+
+/* ── t-metrics : 수치 스택 ──────────────────────────────────── */
+.metrics{display:grid;grid-template-columns:7em repeat(3,1fr);gap:.5em 1em;align-items:center}
+.metrics .rowlabel{font-size:.6875em;color:var(--sub);line-height:1.5}
+.metrics .cell{
+  text-align:center;font-size:.875em;font-weight:600;
+  padding:.5em 0;border-bottom:1px solid var(--line);
+}
+.metrics .colhead{
+  text-align:center;font-size:.6875em;font-weight:600;color:var(--rust);
+  letter-spacing:.06em;padding-bottom:.4em;
+}
+.metrics .op{text-align:right;font-size:.75em;color:var(--sub)}
+.metrics .cell.total{font-size:1.125em;color:var(--rust);border-bottom:none;border-top:1px solid var(--line)}
+.metrics .rowlabel.total{font-weight:600;color:var(--fg)}
+
+/* ── t-table : 다년 표 ──────────────────────────────────────── */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th,.tbl td{
+  font-size:.6875em;padding:.62em .7em;text-align:right;
+  border-bottom:1px solid var(--line);line-height:1.5;
+}
+.tbl th{font-weight:600;color:var(--sub);letter-spacing:.04em}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl .accent td{color:var(--rust);font-weight:600}
+.tbl caption{
+  caption-side:bottom;font-size:.625em;color:var(--sub);
+  text-align:left;padding-top:.9em;line-height:1.7;
+}
+
+/* ── t-profile : 인물 + 마일스톤 ────────────────────────────── */
+.people{display:grid;grid-template-columns:1fr 1fr;gap:1em;margin-bottom:1.1em}
+.person{background:var(--card);border:1px solid var(--line);border-radius:.4em;padding:1em 1.1em}
+.person .who{font-size:.875em;font-weight:600;margin-bottom:.15em}
+.person .role{font-size:.6875em;color:var(--rust);margin-bottom:.6em}
+.person ul{list-style:none}
+.person li{font-size:.6875em;color:var(--sub);line-height:1.8;padding-left:.7em;position:relative}
+.person li::before{content:"·";position:absolute;left:0}
+.milestones{display:flex;gap:.5em}
+.ms{flex:1;border-top:2px solid var(--rust);padding-top:.6em}
+.ms .yr{font-size:.6875em;font-weight:700;color:var(--rust);margin-bottom:.25em}
+.ms p{font-size:.625em;color:var(--sub);line-height:1.6}
+
+/* ── t-divider : 섹션 구분 ──────────────────────────────────── */
+.t-divider .body{justify-content:flex-start}
+.t-divider .kicker{font-size:1.25em;letter-spacing:.22em;margin-bottom:0}
+
+/* ── 푸터 3분할 : 모든 슬라이드 필수 ───────────────────────── */
+.footer{
+  display:flex;align-items:baseline;justify-content:space-between;
+  font-size:.5625em;color:var(--sub);letter-spacing:.04em;
+  padding-top:1.1em;flex:none;
+}
+.footer .mid{flex:1;text-align:center}
+
+/* ── 우측 dots 네비 ─────────────────────────────────────────── */
+#dots{
+  position:fixed;right:.9em;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:.56em;z-index:10;font-size:16px;
+}
+#dots a{
+  width:.5em;height:.5em;border-radius:50%;background:#ffffff40;
+  transition:background .2s,transform .2s;
+}
+#dots a:hover{background:#fff;transform:scale(1.3)}
+#dots a.on{background:var(--rust);box-shadow:0 0 0 .19em rgba(156,74,52,.28)}
+
+/* ══════════════════════════════════════════════════════════════
+   모바일 ≤980px : 캔버스를 풀고 리플로우 + autofit
+   모든 치수가 em 이므로 .canvas 의 font-size 만 줄이면 전체가 줄어든다.
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width:980px){
+  html,body{overflow-y:scroll}
+  .slide{height:100dvh}
+  .canvas{
+    width:100%;height:100dvh;
+    transform:none;box-shadow:none;
+    padding:2em 1.35em 1.5em;
+    font-size:15px;                 /* fitMobile() 이 15 → 8 로 조절 */
+  }
+  /* flex-shrink 를 0 으로 바꾸는 것이 핵심이다.
+     flex:1(=1 1 0) 상태에서는 body 가 찌그러지고 내용이 헤더·푸터 위로
+     겹쳐 그려질 뿐 캔버스 scrollHeight 가 커지지 않아 autofit 이 넘침을
+     감지하지 못한다. 1 0 auto 면 여유가 있을 때만 늘어나고 넘칠 땐
+     안 줄어들어 넘침이 캔버스까지 전파된다. */
+  .body{flex:1 0 auto}
+  .grid-2,.grid-3,.grid-4,.bm,.people{grid-template-columns:1fr}
+  .flow{flex-direction:column}
+  .flow .arw{padding:.15em 0}
+  .flow .arw::before{content:"↓"}
+  .duo-wrap{flex-direction:column}
+  .metrics{grid-template-columns:5.5em repeat(3,1fr);gap:.35em .5em}
+  .milestones{flex-wrap:wrap}
+  .ms{flex:1 1 45%}
+  #dots{display:none}
+  .display{font-size:1.5em}
+  h1{font-size:1.25em}
+}
+
+/* ── 인쇄 : 960×540 가로 ────────────────────────────────────── */
+@media print{
+  body{background:#fff;overflow:visible;scroll-snap-type:none}
+  .slide{height:auto;page-break-after:always;display:block}
+  .canvas{transform:none;box-shadow:none;width:960px;height:540px;font-size:16px}
+  #dots{display:none}
+  @page{size:960px 540px;margin:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<nav id="dots"></nav>
+<div class="deck">
+
+<!-- ═══ 01 · t-cover ═══════════════════════════════════════════ -->
+<section class="slide"><div class="canvas is-dark t-cover" data-title="COVER">
+  <div class="body">
+    <div class="brand">브랜드명</div>
+    <div class="cover-meta">한 줄 포지셔닝 · 2026.08</div>
+    <div class="display">핵심 주장을 한 문장으로 —<br>무엇을 누구에게 어떻게.</div>
+    <div class="grid grid-3" style="margin-bottom:1.6em">
+      <div class="card">
+        <div class="card-title">제품군 A</div>
+        <p>구성요소 · 구성요소</p>
+        <p style="margin-top:.5em">핵심 기능 한 줄</p>
+        <p class="accent" style="margin-top:.5em">수익 성격</p>
+      </div>
+      <div class="card">
+        <div class="card-title">제품군 B</div>
+        <p>구성요소 · 구성요소</p>
+        <p style="margin-top:.5em">핵심 기능 한 줄</p>
+        <p class="accent" style="margin-top:.5em">수익 성격</p>
+      </div>
+      <div class="card">
+        <div class="card-title">제품군 C</div>
+        <p>구성요소 · 구성요소</p>
+        <p style="margin-top:.5em">핵심 기능 한 줄</p>
+        <p class="accent" style="margin-top:.5em">수익 성격</p>
+      </div>
+    </div>
+    <p class="lead" style="margin-bottom:0">보충 설명 첫째 줄 — 무엇을 어떻게 하는지.<br>보충 설명 둘째 줄 — 그래서 무엇이 달라지는지.</p>
+    <div class="statement-bar">이미 확보한 자산으로 시작합니다.</div>
+  </div>
+  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>01</span></div>
+</div></section>
+
+<!-- ═══ 02 · t-profile ═════════════════════════════════════════ -->
+<section class="slide"><div class="canvas is-dark t-profile" data-title="TEAM &amp; MILESTONES">
+  <div class="kicker">Team &amp; Milestones</div>
+  <h1>시장·채널·기술을 이미 확보한 팀</h1>
+  <div class="body">
+    <div class="people">
+      <div class="person">
+        <div class="who">이름</div>
+        <div class="role">CEO · 사업총괄</div>
+        <ul><li>경력 한 줄</li><li>경력 한 줄</li><li>경력 한 줄</li></ul>
+      </div>
+      <div class="person">
+        <div class="who">이름</div>
+        <div class="role">CTO · 기술총괄</div>
+        <ul><li>경력 한 줄</li><li>경력 한 줄</li><li>경력 한 줄</li></ul>
+      </div>
+    </div>
+    <div class="milestones">
+      <div class="ms"><div class="yr">2019</div><p>마일스톤 한 줄</p></div>
+      <div class="ms"><div class="yr">2022</div><p>마일스톤 한 줄</p></div>
+      <div class="ms"><div class="yr">2024</div><p>마일스톤 한 줄</p></div>
+      <div class="ms"><div class="yr">2026</div><p>마일스톤 한 줄</p></div>
+    </div>
+  </div>
+  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>02</span></div>
+</div></section>
+
+<!-- ═══ 03 · t-cards3 ══════════════════════════════════════════ -->
+<section class="slide"><div class="canvas is-dark t-cards3" data-title="WHY US">
+  <div class="kicker">Why Us</div>
+  <h1>우리는 0에서 시작하지 않습니다</h1>
+  <p class="lead">확장의 장벽은 기술만이 아니라 현장 진입이다 — 우리는 그 채널을 이미 갖고 있다.</p>
+  <div class="body">
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-title"><span class="num">①</span>첫 번째 축</div>
+        <p>무엇을 확보했는지 두 줄 이내로.</p>
+        <div class="hairline"></div>
+        <p class="accent">정량 근거</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="num">②</span>두 번째 축</div>
+        <p>무엇을 확보했는지 두 줄 이내로.</p>
+        <div class="hairline"></div>
+        <p class="accent">정량 근거</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="num">③</span>세 번째 축</div>
+        <p>무엇을 확보했는지 두 줄 이내로.</p>
+        <div class="hairline"></div>
+        <p class="accent">정량 근거</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>03</span></div>
+</div></section>
+
+<!-- ═══ 04 · t-flow ════════════════════════════════════════════ -->
+<section class="slide"><div class="canvas is-dark t-flow" data-title="핵심 제품">
+  <div class="kicker">Core Product</div>
+  <h1>관찰하고, 진단하고, 실행하고, 학습한다</h1>
+  <p class="lead">각 단계가 무엇을 하는지 한 문장으로 요약합니다.</p>
+  <div class="body">
+    <div class="flow">
+      <div class="step">
+        <div class="step-head"><span class="num">①</span>OBSERVE</div>
+        <div class="step-sub">상시 수집</div>
+        <ul><li>데이터 소스</li><li>데이터 소스</li><li>데이터 소스</li></ul>
+      </div>
+      <div class="arw"></div>
+      <div class="step">
+        <div class="step-head"><span class="num">②</span>DIAGNOSE</div>
+        <div class="step-sub">기회 발견</div>
+        <ul><li>진단 항목</li><li>진단 항목</li><li>진단 항목</li></ul>
+      </div>
+      <div class="arw"></div>
+      <div class="step on">
+        <div class="step-head"><span class="num">③</span>ACT<span class="badge">승인 · 실행</span></div>
+        <div class="step-sub">현장 반영</div>
+        <ul><li>실행 항목</li><li>실행 항목</li><li>실행 항목</li></ul>
+      </div>
+      <div class="arw"></div>
+      <div class="step">
+        <div class="step-head"><span class="num">④</span>LEARN</div>
+        <div class="step-sub">결과 학습</div>
+        <ul><li>측정 항목</li><li>측정 항목</li><li>측정 항목</li></ul>
+      </div>
+    </div>
+    <div class="statement-bar">앞 단계를 제안하고, 중간을 실행하며, 결과로 다음을 학습합니다.</div>
+    <p class="fine" style="margin-top:.9em">분석 예시 &nbsp; 지표 A 21% / 지표 B 29% → 실행 후 변화 측정 → 다음 추천에 학습</p>
+  </div>
+  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>04</span></div>
+</div></section>
+
+<!-- ═══ 05 · t-duo ═════════════════════════════════════════════ -->
+<section class="slide"><div class="canvas is-dark t-duo" data-title="WHY WE WIN">
+  <div class="kicker">Why We Win</div>
+  <h1>거래에서 끝나지 않고 결과까지 학습합니다</h1>
+  <div class="body">
+    <div class="duo-wrap" style="display:flex;gap:1.1em;align-items:stretch">
+      <div class="pane">
+        <div class="pane-label">기존 플레이어</div>
+        <ul><li>출발점이 어디인지</li><li>무엇에 집중하는지</li><li>어디서 멈추는지</li></ul>
+      </div>
+      <div class="pane">
+        <div class="pane-label">우리의 집중 영역</div>
+        <div class="loop">
+          기회 발견<br><span class="mark">↓</span><br>
+          승인 후 실행<br><span class="mark">↓</span><br>
+          결과 측정<br><span class="mark">↺</span><br>
+          다음 실행에 학습
+        </div>
+      </div>
+    </div>
+    <div class="statement-bar">닫힌 루프가 경쟁 우위의 원천입니다.</div>
+  </div>
+  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>05</span></div>
+</div></section>
+
+<!-- ═══ 06 · t-bm (라이트) ═════════════════════════════════════ -->
+<section class="slide"><div class="canvas is-light t-bm" data-title="BUSINESS MODEL">
+  <div class="kicker">Business Model</div>
+  <h1>핵심 제품을 중심으로 반복수익이 열린다</h1>
+  <div class="body">
+    <div class="bm">
+      <div class="bm-col">
+        <div class="bm-head">수익모델 A</div>
+        <div class="bm-body">
+          <div class="bm-claim">한 줄 정의</div>
+          <div class="bm-row"><span class="k">누가</span><span class="v">고객 세그먼트</span></div>
+          <div class="bm-row"><span class="k">상품</span><span class="v">무엇을 파는지</span></div>
+          <div class="bm-row hot"><span class="k">과금</span><span class="v">월 5만원 · 승인형</span></div>
+          <div class="bm-row"><span class="k">가치</span><span class="v">고객이 얻는 것</span></div>
+        </div>
+      </div>
+      <div class="bm-col">
+        <div class="bm-head">수익모델 B</div>
+        <div class="bm-body">
+          <div class="bm-claim">한 줄 정의</div>
+          <div class="bm-row"><span class="k">누가</span><span class="v">고객 세그먼트</span></div>
+          <div class="bm-row"><span class="k">상품</span><span class="v">무엇을 파는지</span></div>
+          <div class="bm-row hot"><span class="k">과금</span><span class="v">CPC + 성과형</span></div>
+          <div class="bm-row"><span class="k">배분</span><span class="v">수익 배분 구조</span></div>
+        </div>
+      </div>
+      <div class="bm-col">
+        <div class="bm-head">수익모델 C</div>
+        <div class="bm-body">
+          <div class="bm-claim">한 줄 정의</div>
+          <div class="bm-row"><span class="k">수익원</span><span class="v">거래 유형</span></div>
+          <div class="bm-row"><span class="k">상품</span><span class="v">무엇을 파는지</span></div>
+          <div class="bm-row hot"><span class="k">과금</span><span class="v">거래액 × 0.30%</span></div>
+          <div class="bm-row"><span class="k">산식</span><span class="v">월 4,000만 × 30% → 3.6만</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="statement-bar">A가 도입·유지를 만들고, <span class="hl">B·C가 고객당 수익을 확장한다</span></div>
+  </div>
+  <div class="footer"><span>브랜드</span><span class="mid">브랜드 · Investor Briefing</span><span>06</span></div>
+</div></section>
+
+<!-- ═══ 07 · t-metrics (라이트) ════════════════════════════════ -->
+<section class="slide"><div class="canvas is-light t-metrics" data-title="REVENUE POTENTIAL">
+  <div class="kicker">Revenue Potential</div>
+  <h1>1,000개 활성 고객 기준 연간 매출 잠재력</h1>
+  <p class="lead">구독료는 고정, 나머지는 이용량에 연동 · 가정은 각주 참조</p>
+  <div class="body">
+    <div class="metrics">
+      <div></div>
+      <div class="colhead">시나리오 30%</div>
+      <div class="colhead">시나리오 60%</div>
+      <div class="colhead">시나리오 100%</div>
+
+      <div class="rowlabel">구독 (고정)</div>
+      <div class="cell">5.0만</div><div class="cell">5.0만</div><div class="cell">5.0만</div>
+
+      <div class="rowlabel">결제 (30% 가정)</div>
+      <div class="cell">3.6만</div><div class="cell">3.6만</div><div class="cell">3.6만</div>
+
+      <div class="rowlabel">미디어 (변동)</div>
+      <div class="cell">2.1만</div><div class="cell">4.2만</div><div class="cell">7.0만</div>
+
+      <div class="rowlabel total">고객당 / 월</div>
+      <div class="cell total">10.7만</div><div class="cell total">12.8만</div><div class="cell total">15.6만</div>
+    </div>
+    <div class="statement-bar">× 1,000 고객 × 12개월 = 연 12.8억 ~ 18.7억</div>
+    <p class="fine" style="margin-top:.9em">미디어 월 10만원/활성고객 · 결제 침투 30% 가정. 시나리오는 미디어 판매율 변동.</p>
+  </div>
+  <div class="footer"><span>브랜드</span><span class="mid">브랜드 · Investor Briefing</span><span>07</span></div>
+</div></section>
+
+<!-- ═══ 08 · t-divider (라이트) ════════════════════════════════ -->
+<section class="slide"><div class="canvas is-light t-divider" data-title="APPENDIX">
+  <div class="body">
+    <div class="kicker">Appendix</div>
+  </div>
+  <div class="footer"><span>브랜드</span><span class="mid"></span><span>08</span></div>
+</div></section>
+
+<!-- ═══ 09 · t-table (라이트) ══════════════════════════════════ -->
+<section class="slide"><div class="canvas is-light t-table" data-title="APPENDIX · 5개년 추정">
+  <div class="kicker">Appendix · 별첨</div>
+  <h1>고객수 성장에 따른 5개년 매출 추정</h1>
+  <div class="body">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>수익모델</th><th>1년차</th><th>2년차</th><th>3년차</th><th>4년차</th><th>5년차</th><th>성격</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>고객수</td><td>200</td><td>2,000</td><td>7,000</td><td>15,000</td><td>30,000</td><td>—</td></tr>
+        <tr><td>수익모델 A</td><td>1.2</td><td>14</td><td>42</td><td>92</td><td>180</td><td>반복</td></tr>
+        <tr><td>수익모델 B</td><td>0.3</td><td>5</td><td>26</td><td>76</td><td>202</td><td>성과</td></tr>
+        <tr><td>수익모델 C</td><td>–</td><td>9</td><td>40</td><td>108</td><td>259</td><td>거래</td></tr>
+        <tr class="accent"><td>합계</td><td>1.5</td><td>28</td><td>108</td><td>276</td><td>641</td><td>단위 억원</td></tr>
+      </tbody>
+      <caption>가정 · 판매율과 침투율은 별도 표 참조 · 시나리오는 Q&amp;A에서 다룸</caption>
+    </table>
+  </div>
+  <div class="footer"><span>브랜드</span><span class="mid">브랜드 · Investor Briefing</span><span>09</span></div>
+</div></section>
+
+</div>
+
+<script>
+(function(){
+  var canvases = [].slice.call(document.querySelectorAll('.canvas'));
+  var slides   = [].slice.call(document.querySelectorAll('.slide'));
+  var W = 960, H = 540, MOBILE = 980;
+
+  /* 우측 dots 생성 */
+  var dots = document.getElementById('dots');
+  canvases.forEach(function(c,i){
+    var a = document.createElement('a');
+    a.href = '#'; a.title = c.dataset.title || ('Slide ' + (i+1));
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      slides[i].scrollIntoView({behavior:'smooth'});
+    });
+    dots.appendChild(a);
+  });
+  var links = [].slice.call(dots.children);
+
+  /* 캔버스 스케일 : 뷰포트에 맞춤 (데스크톱만) */
+  function scale(){
+    if (window.innerWidth <= MOBILE) {
+      canvases.forEach(function(c){ c.style.removeProperty('--k'); });
+      return;
+    }
+    var k = Math.min(window.innerWidth / (W + 80), window.innerHeight / (H + 80));
+    canvases.forEach(function(c){ c.style.setProperty('--k', k); });
+  }
+
+  /* 모바일 autofit : 넘치는 캔버스만 base font-size 를 줄인다.
+     모든 치수가 em 이므로 이 한 줄이 전체를 축소한다. */
+  function fitMobile(){
+    if (window.innerWidth > MOBILE) {
+      canvases.forEach(function(c){ c.style.removeProperty('font-size'); });
+      return;
+    }
+    canvases.forEach(function(c){
+      var fs = 15;
+      c.style.fontSize = fs + 'px';
+      while (c.scrollHeight > c.clientHeight + 1 && fs > 8) {
+        fs -= 0.25;
+        c.style.fontSize = fs + 'px';
+      }
+    });
+  }
+
+  /* 현재 슬라이드 dots 반영 */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (!en.isIntersecting) return;
+      var i = slides.indexOf(en.target);
+      links.forEach(function(a,j){ a.classList.toggle('on', i === j); });
+    });
+  }, {threshold:0.55});
+  slides.forEach(function(s){ io.observe(s); });
+
+  /* 키보드 네비 */
+  function current(){
+    var top = window.scrollY, best = 0, min = Infinity;
+    slides.forEach(function(s,i){
+      var d = Math.abs(s.offsetTop - top);
+      if (d < min) { min = d; best = i; }
+    });
+    return best;
+  }
+  document.addEventListener('keydown', function(e){
+    var i = current(), n = slides.length, t = null;
+    if (e.key === 'ArrowDown'  || e.key === 'PageDown'  || e.key === ' ') t = Math.min(i+1, n-1);
+    else if (e.key === 'ArrowUp' || e.key === 'PageUp')                   t = Math.max(i-1, 0);
+    else if (e.key === 'Home')                                           t = 0;
+    else if (e.key === 'End')                                            t = n-1;
+    if (t === null) return;
+    e.preventDefault();
+    slides[t].scrollIntoView({behavior:'smooth'});
+  });
+
+  function relayout(){ scale(); fitMobile(); }
+  window.addEventListener('resize', relayout);
+  window.addEventListener('load', relayout);
+  relayout();
+})();
+</script>
+</body>
+</html>
