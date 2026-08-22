@@ -1,6 +1,6 @@
 ---
 name: do-hot-pt
-description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 960×540 고정 캔버스를 뷰포트에 맞춰 스케일하고 모바일에서는 리플로우+autofit, Pretendard, 네이비(#1B2A4A)·패널(#22335A) 다크 ↔ 화이트 라이트 교차 배경, 러스트(#9C4A34) 액센트. cover·profile·cards3·flow·duo·bm·metrics·table·divider 슬라이드 타입. 투자유치·IR·기업설명·사업계획 발표 요청 시 사용.
+description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 960×540 고정 캔버스를 뷰포트에 맞춰 스케일하고 모바일에서는 리플로우+autofit, Pretendard, 네이비(#1B2A4A)·패널(#22335A) 다크 ↔ 화이트 라이트 교차 배경, 러스트(#9C4A34) 액센트. 표지·팀연혁(원형사진+타임라인)·통계패널·4단계 흐름·원형번호 카드·경쟁대비 패널·순환루프·수익모델·단가표·로드맵Gate·누적막대차트·다년추정표 14종 레이아웃. 투자유치·IR·기업설명·사업계획 발표 요청 시 사용.
 ---
 
 # do-hot-pt — 네이비 러스트 IR 덱 생성
@@ -35,32 +35,43 @@ description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 96
 
 ## 슬라이드 타입 (마크업은 `assets/pt3-skeleton.html` — 복제해서 텍스트만 교체)
 
-| 클래스 | 용도 | 배경 | 핵심 요소 |
+스켈레톤은 **HOTPLX TIPS IR 14장 전체**다. 만들 슬라이드와 같은 성격의 장을 통째로 복제해 텍스트만 갈아끼운다.
+
+| 스켈레톤 장 | 용도 | 배경 | 핵심 요소 |
 |---|---|---|---|
-| `t-cover` | 표지 | 다크 | `.brand`·`.cover-meta`·`.display`·`.grid-3`>`.card`×3·`.lead`·`.statement-bar` |
-| `t-profile` | 팀·연혁 | 다크 | `.people`>`.person`(이름·역할·경력) + `.milestones`>`.ms`(연도·내용) |
-| `t-cards3` | 3축 요약 | 양쪽 | `.grid-3` > `.card`(`.num` ①②③ + `.hairline` + `.accent` 정량근거) |
-| `t-flow` | 4단계 흐름 | 다크 | `.flow` > `.step`×4 + `.arw`(자동 →/↓), 강조 단계에 `.on`·`.badge` |
-| `t-duo` | 2축 대비·순환 | 양쪽 | `.duo-wrap` > `.pane`×2, 순환은 `.loop`(`.mark`로 ↓↺) |
-| `t-bm` | 수익모델 | 라이트 | `.bm` > `.bm-col`(`.bm-head` 네이비 바 + `.bm-claim` + `.bm-row` 라벨·값, `.hot`으로 과금 강조) |
-| `t-metrics` | 단가·시나리오 | 라이트 | `.metrics` 4열 그리드 (`.colhead`·`.rowlabel`·`.cell`, 합계행은 `.cell.total`) |
-| `t-table` | 다년 추정 | 라이트 | `.tbl` (합계행 `.accent`, 가정은 `<caption>`) |
-| `t-divider` | 섹션 구분 | 양쪽 | `.kicker`만 (APPENDIX 등) |
+| 01 | 표지 | 다크 | `.wm.cover` 워드마크 · `.kicker` · `h1` · `.grid3`>`.card`×3 · `.lead` · `.statement-bar` |
+| 02 | 팀·연혁 | 라이트 | `.pcard`(`.ph` 원형 사진 + `.nm`/`.rl`/`ul`/`.tagline`) + `.tl`>`.it`(`.hot`으로 러스트 점) + `.softbar` |
+| 03 | 자산·확산 | 라이트 | `.statpanel`(대형 수치) + `.chain`>`.lnk`(`.on` 강조) + `.dn` 화살표 |
+| 04 | 4단계 흐름 | 다크 | `.flow`>`.step`×4 + `.arw`, 강조 단계에 `.on` |
+| 05 | 3축 요약 | 라이트 | `.grid3`>`.card` + `.nc`(원형 번호) + `.tintbox`(`.hot`) |
+| 06 | 경쟁 대비 | 라이트 | `.grid2`>`.panelbox`(`.navy`) + `.stack`>`.bx`(`.on`) |
+| 07 | 순환 루프 | 다크 | `.grid2`>`.panelbox` + `.pill`(`.soft`) + ↓↺ 리스트 |
+| 08 | 수익모델 | 라이트 | `.bm`>`.bm-col`(`.bm-head`·`.bm-claim`·`.bm-row.hot`) |
+| 09 | 단가·시나리오 | 다크 | `.metrics` 4열 그리드 (`.colhead`·`.rowlabel`·`.cell.total`) |
+| 10 | 로드맵·Gate | 라이트 | `.grid3.r`>`.panelbox` + `.pill`(`.navy`) + `.tintbox` |
+| 11 | 섹션 구분 | 라이트 | `.kicker`만 (APPENDIX) |
+| 12 | 누적 막대 차트 | 다크 | `.chart`>`.col`>`.seg`(`.s1`~`.s4`) + `.legend` + `.sidecard` |
+| 13 | 다년 추정 표 | 라이트 | `.otbl`(`tr.tot` 네이비 합계 · `tr.tot2` 러스트 합계 · `tr.thin` 가정행) |
+| 14 | 경쟁 비교 표 | 라이트 | `.otbl` + `td.hl`(자사 열 틴트) + `td.sub`(이탤릭 보조행) |
 
 ## 공통 컴포넌트
 
-- `.kicker`(러스트 대문자 레터스페이스) · `h1` · `.display`(표지 전용) · `.lead`(한 문장 요약) · `.hairline`
-- `.num`(①②③④, 러스트) · `.card`(`.card-title` + p + `.accent`) · `.badge`(러스트 알약)
-- `.statement-bar` — 한 장에 하나. 안에서 `.hl`로 한 구절만 더 밝게
-- `.fine` — 가정·각주(이탤릭 중앙)
-- `.footer` 3분할(좌 로고 · 중앙 캡션 · 우 페이지번호) — **모든 슬라이드에 필수**
-
+- `.kicker`(러스트 대문자) · `h1` · `.lead` · `.fine`(가정·각주, 이탤릭 중앙)
+- `.nc` 원형 번호 배지 — **안에는 원문자(①)가 아니라 숫자(1)를 넣는다.** `.nc.rust`로 러스트
+- `.pill` 알약 라벨 — `.navy` / `.soft` 변형
+- `.tintbox` 카드 안 연파랑 강조 박스 · `.softbar` 얇은 보조 바
+- `.statement-bar` — **한 장에 하나.** 안에서 `.hl`로 한 구절만 더 밝게
+- `.wm` 워드마크 — `.cover`(표지) · `.br`(좌하단, 라이트 슬라이드) · `.tr`(우상단, 다크 슬라이드).
+  스켈레톤은 `.wmtext` 텍스트 자리표시이며, 실제 덱에서는 `<img src="data:image/png;base64,…">`로 교체한다
+- `.ph` 인물 사진 자리표시 — 실제 덱에서는 base64 `<img>`로 교체 (원형·러스트 링)
+- `.footer` 3분할(좌 로고/캡션 · 중앙 캡션 · 우 페이지번호) — **모든 슬라이드에 필수**
 ## 빌드 절차
 
 1. **스켈레톤 복사**: `assets/pt3-skeleton.html`을 작업 위치로 복사.
 2. **`<style>`·`<script>`·`.deck`·`.canvas`는 건드리지 않는다.** (형식의 핵심)
-3. `.deck` 안 `<section>`을 주제에 맞는 타입으로 재구성. 스켈레톤의 동일 타입을 복제해 텍스트만 교체.
-4. 표지 → 팀·시장 → 제품 → 경쟁우위 → 수익모델 → 수치 → `t-divider` → 부록 순. **한 슬라이드 = 한 메시지.**
+3. `.deck` 안 `<section>`을 재구성한다. 성격이 같은 장을 **통째로 복제해 텍스트만 교체**한다.
+   슬라이드는 `<div class="canvas is-dark|is-light" data-title="…">` 하나로 시작하며, 레이아웃은 안쪽 컴포넌트가 결정한다.
+4. 표지 → 팀·연혁 → 자산 → 제품 → 경쟁 → 수익모델 → 수치 → APPENDIX 구분 → 부록 순. **한 슬라이드 = 한 메시지.**
 5. `.is-dark`/`.is-light`를 교차 배치. 각 `<div class="canvas">`의 `data-title`은 우측 dots 툴팁이 된다.
 6. `.footer` 페이지번호를 `01`…`N`으로, `<title>`·표지 텍스트를 주제에 맞게.
 7. **저장**: `<주제>_IR.html`.
@@ -70,7 +81,8 @@ description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 96
    "$CHROME" --headless --disable-gpu --window-size=1120,700 \
      --screenshot=out.png "file://$PWD/<주제>_IR.html"
    ```
-9. **모바일 확인**: headless Chrome은 `--window-size`에 **최소 너비 500px을 강제**한다. 390px을 재려면 `<iframe width=390 height=844>`로 감싼 페이지를 렌더한다. 넘치면 **문장을 줄인다** — CSS를 손대지 않는다.
+9. **넘침 측정** — 위 「함정」의 두 식(`body 내부 넘침`·`푸터 침범`)을 14장 전부에 돌린다. 눈으로만 보면 놓친다.
+10. **모바일 확인**: headless Chrome은 `--window-size`에 **최소 너비 500px을 강제**한다. 390px을 재려면 `<iframe width=390 height=844>`로 감싼 페이지를 렌더한다. 넘치면 **문장을 줄인다** — 폰트를 줄이지 않는다.
 
 ## 원칙
 
@@ -82,11 +94,23 @@ description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 96
 
 ## 함정 (실제로 겪은 것)
 
-- **`transform: rotate()`를 모바일 화살표에 쓰지 않는다.** 트랜스폼은 scrollable overflow 영역에 잡혀, 안 넘치는 슬라이드를 autofit이 8px까지 끝없이 줄인다. 화살표 글자는 `::before { content }`로 바꾼다.
-- **`.body`의 flex-shrink를 0으로 유지한다**(`flex: 1 0 auto`). `flex: 1`(=`1 1 0`)이면 내용이 넘칠 때 body가 찌그러지고 내용이 헤더·푸터 **위에 겹쳐 그려질 뿐** 캔버스 `scrollHeight`가 커지지 않는다. autofit이 넘침을 못 보고 그냥 통과시킨다.
-- **`scrollHeight`만으로 판정하지 않는다.** 위 두 경우 모두 `scrollHeight`는 정상이라고 답했고, 실제로 렌더해 보고서야 h1이 잘린 것이 드러났다. 반환값이 아니라 결과물을 본다.
+- **`scrollHeight` 로 넘침을 판정하지 않는다.** `.body`는 데스크톱에서 `flex:1`(=`1 1 0`)이라 내용이 넘치면
+  body가 찌그러지고 내용이 **푸터 위에 겹쳐 그려질 뿐** `scrollHeight`는 정상이라고 답한다.
+  반드시 아래 두 가지를 함께 재고, 하나라도 걸리면 **문장을 줄인다**:
+  ```js
+  const over = body.scrollHeight - body.clientHeight;          // ① body 내부 넘침
+  const collide = contentBottom - footer.getBoundingClientRect().top;  // ② 푸터 침범
+  ```
+- **새로 만든 그리드는 모바일에서 저절로 접히지 않는다.** `.grid2`/`.grid3` 같은 컴포넌트를 추가하면
+  `@media (max-width:980px)`에 `grid-template-columns:1fr !important`를 반드시 같이 넣는다.
+  안 넣으면 우측 열이 화면 밖으로 잘려나가는데 세로 autofit은 이를 못 잡는다.
+- **`.wm` 절대배치 워드마크도 모바일에서 `position:static`으로 풀어준다.**
+- **원형 번호 배지 안에는 숫자를 넣는다.** `①`을 넣으면 원 안에 작은 원이 하나 더 그려진다.
+- **`transform: rotate()`를 모바일 화살표에 쓰지 않는다.** 트랜스폼이 scrollable overflow에 잡혀
+  안 넘치는 슬라이드를 autofit이 8px까지 끝없이 줄인다. 화살표는 `::before { content }`로 넣는다.
 
 ## 참고
 
-- 원형: `HOTPLX_IR_short_최종.html` (0016 HOTPL AI Store DNA / 자료/HOTPLX)
-- 자매 스킬: `/do-genpt`(에디토리얼) · `/do-report`(A4 PDF)
+- 원형: `HOTPLX_TIPS_IR_tech_business_v3.pdf` — 스켈레톤은 이 PDF 14장을 HTML로 재현한 것이다
+  (0016 HOTPL AI Store DNA / 0016o. 토스 대비 X-ORDER 포지셔닝)
+- 자매 스킬: `/do-genpt`(에디토리얼) · `/do-hot-report`(A4 1p) · `/do-hot-pdf`(PDF 렌더)

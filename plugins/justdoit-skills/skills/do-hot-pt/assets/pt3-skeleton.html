@@ -269,265 +269,602 @@ h1{font-size:1.5em;font-weight:700;line-height:1.34;letter-spacing:-.02em;margin
   @page{size:960px 540px;margin:0}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* ══════════════════════════════════════════════════════════════
+   원본 재현 레이어 — HOTPLX_TIPS_IR_tech_business_v3.pdf 기준
+   (모든 치수 em · 테두리 1px 만 예외)
+   ══════════════════════════════════════════════════════════════ */
+.canvas.is-light{ --tint:#EDF1F8; --panel-l:#F4F5F7; }
+.canvas.is-dark { --tint:#2A3B63; --panel-l:#22335A; }
+
+/* 워드마크 */
+.wm{position:absolute;opacity:.9}
+.wm img{display:block;height:1.05em;width:auto}
+.wm.br{left:3em;bottom:1.5em}
+.wm.tr{right:3em;top:2.2em}
+.wm.tr img{height:1.9em}
+.wm.cover{position:static;margin-bottom:1.1em}
+.wm.cover img{height:2.6em}
+
+/* 원형 번호 */
+.nc{display:inline-flex;align-items:center;justify-content:center;
+  width:1.9em;height:1.9em;border-radius:50%;flex:0 0 auto;
+  font-size:.9375em;font-weight:700;color:#fff;background:var(--navy)}
+.nc.rust{background:var(--rust)}
+.is-dark .nc{background:#31456E;color:#fff}
+.is-dark .nc.rust{background:var(--rust)}
+
+/* 좌측 통계 패널 */
+.statpanel{background:var(--navy);color:#fff;border-radius:.35em;
+  padding:1.5em 1.4em;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.statpanel .cap{font-size:.75em;color:#A9B6D0;margin-bottom:.35em}
+.statpanel .big{font-size:2.6em;font-weight:800;letter-spacing:-.03em;line-height:1}
+.statpanel .big small{font-size:.34em;font-weight:600;margin-left:.35em}
+.statpanel .sub{font-size:.9375em;font-weight:600;margin-top:.35em}
+.statpanel hr{border:0;border-top:1px solid rgba(255,255,255,.22);margin:1.1em 0 .8em}
+.statpanel .now{font-size:.75em;font-weight:700;color:#E08C7A;margin-bottom:.6em}
+.statpanel .row{display:flex;justify-content:space-between;font-size:.75em;line-height:2}
+.statpanel .row b{font-weight:600;color:#C7D0E4}
+
+/* 세로 체인 (①↓②↓③) */
+.chain{display:flex;flex-direction:column;gap:.3em}
+.chain .lnk{display:flex;align-items:center;gap:.9em;
+  border:1px solid var(--line);border-radius:.35em;padding:.75em 1em;background:var(--card)}
+.chain .lnk.on{background:var(--tint);border-color:#B9C6DE}
+.chain .lnk h4{font-size:.875em;font-weight:700;margin-bottom:.2em}
+.chain .lnk p{font-size:.75em;color:var(--sub);line-height:1.5}
+.chain .dn{text-align:center;color:var(--muted);font-size:.75em;line-height:1}
+
+/* 타임라인 */
+.tl{position:relative;padding-left:1.35em}
+.tl::before{content:"";position:absolute;left:.42em;top:.5em;bottom:.5em;
+  width:1px;background:#C7D0E4}
+.tl .it{position:relative;margin-bottom:.42em}
+.tl .it::before{content:"";position:absolute;left:-1.15em;top:.15em;
+  width:.62em;height:.62em;border-radius:50%;background:#4A5F92}
+.tl .it.hot::before{background:var(--rust)}
+.tl .it h5{font-size:.78em;font-weight:700;margin-bottom:.1em}
+.tl .it p{font-size:.72em;color:var(--sub);line-height:1.45}
+.tl .it .yr{color:var(--navy);font-weight:800}
+.tl .it.hot .yr{color:var(--rust)}
+
+/* 인물 카드 */
+.pcard{display:flex;gap:.9em;background:var(--panel-l);border:1px solid var(--line);
+  border-radius:.35em;padding:.7em 1em;margin-bottom:.5em}
+.pcard img{width:3.6em;height:3.6em;border-radius:50%;object-fit:cover;
+  flex:0 0 auto;border:2px solid var(--rust)}
+.pcard .nm{font-size:.95em;font-weight:800}
+.pcard .nm span{font-size:.72em;font-weight:700;color:var(--navy);margin-left:.35em}
+.pcard .rl{font-size:.75em;font-weight:600;color:var(--navy);margin:.15em 0 .5em}
+.pcard ul{list-style:none;border-top:1px solid var(--line);padding-top:.45em}
+.pcard li{font-size:.66em;color:var(--sub);line-height:1.5;padding-left:.65em;position:relative}
+.pcard li::before{content:"·";position:absolute;left:0}
+.pcard .tagline{font-size:.66em;font-style:italic;font-weight:600;color:var(--rust);margin-top:.3em}
+
+/* 알약 라벨 */
+.pill{display:inline-block;background:var(--rust);color:#fff;font-size:.75em;font-weight:700;
+  border-radius:1.4em;padding:.35em 1.1em;margin-bottom:.7em}
+.pill.navy{background:var(--navy)}
+.pill.soft{background:#31456E}
+
+/* 얇은 박스 리스트 (경쟁 비교) */
+.stack{display:flex;flex-direction:column;gap:.3em}
+.stack .bx{border:1px solid var(--line);border-radius:.3em;background:var(--card);
+  text-align:center;font-size:.78em;padding:.42em .6em}
+.stack .bx.on{background:var(--rust);color:#fff;border-color:var(--rust);font-weight:600}
+.stack .dn{text-align:center;color:var(--muted);font-size:.75em;line-height:1}
+.panelbox{border:1px solid var(--line);border-radius:.35em;padding:.9em 1.05em;background:var(--panel-l)}
+.panelbox.navy{background:var(--navy);border-color:var(--navy);color:#fff}
+.panelbox .ttl{font-size:1.05em;font-weight:800;text-align:center;margin-bottom:.15em}
+.panelbox .sub{font-size:.72em;font-style:italic;text-align:center;color:var(--sub);margin-bottom:.6em}
+.panelbox.navy .sub{color:#A9B6D0}
+.panelbox .foot{text-align:center;font-size:.78em;font-weight:600;margin-top:.55em}
+.panelbox.navy .foot{color:#E08C7A}
+
+/* 틴트 박스 */
+.tintbox{background:var(--tint);border-radius:.3em;padding:.7em .85em;margin-top:.7em}
+.tintbox p{font-size:.75em;line-height:1.6}
+.tintbox .hot{color:var(--rust);font-weight:700}
+
+/* 원본 표 */
+.otbl{width:100%;border-collapse:collapse;font-size:.6875em}
+.otbl th,.otbl td{border:1px solid #D9DEE8;padding:.42em .55em;text-align:center;line-height:1.45}
+.otbl thead th{background:var(--navy);color:#fff;font-weight:700}
+.otbl td.lbl{text-align:left;font-weight:700}
+.otbl td.sub{text-align:left;font-style:italic;color:var(--sub);font-size:.92em}
+.otbl tr.tot td{background:var(--navy);color:#fff;font-weight:700}
+.otbl tr.tot2 td{background:var(--rust);color:#fff;font-weight:700}
+.otbl td.hl{background:var(--tint);font-weight:700}
+.otbl tr.thin td{padding:.3em .6em}
+
+/* 누적 막대 차트 */
+.chart{display:flex;align-items:flex-end;gap:1.6em;height:11.5em;
+  border-bottom:1px solid rgba(255,255,255,.3);padding:0 .5em}
+.chart .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.chart .seg{width:100%;font-size:.5625em;color:#fff;text-align:center;line-height:1}
+.chart .seg span{display:block;padding:.25em 0}
+.chart .s1{background:#4A5F92}
+.chart .s2{background:#8FA0C2}
+.chart .s3{background:#2F4372}
+.chart .s4{background:#E08C7A;color:#3A2018}
+.chart .xl{font-size:.6875em;color:#C7D0E4;margin-top:.5em}
+.legend{display:flex;gap:1.2em;justify-content:center;font-size:.6875em;color:#C7D0E4;margin-top:.6em}
+.legend i{display:inline-block;width:.7em;height:.7em;margin-right:.35em;vertical-align:middle}
+.sidecard{background:var(--panel);border:1px solid rgba(255,255,255,.18);border-radius:.35em;padding:1.2em 1.3em}
+.sidecard .hd{font-size:.75em;color:#A9B6D0;margin-bottom:.5em}
+.sidecard .big{font-size:.9375em;font-weight:700;margin-bottom:.3em}
+.sidecard .big b{font-size:1.5em;font-weight:800;margin-left:.3em}
+.sidecard .big.hot b{color:#E08C7A}
+.sidecard hr{border:0;border-top:1px solid rgba(255,255,255,.2);margin:.8em 0}
+.sidecard .row{display:flex;justify-content:space-between;font-size:.75em;line-height:1.95}
+.sidecard .row b{font-weight:700}
+.sidecard .row.hot b{color:#E08C7A}
+.sidecard .fn{font-size:.625em;font-style:italic;color:#A9B6D0;margin-top:.7em;line-height:1.6}
+
+/* 보조 바 */
+.softbar{background:var(--tint);border:1px solid #C9D3E6;border-radius:.3em;
+  text-align:center;font-size:.78em;font-weight:700;color:var(--navy);padding:.42em .8em;margin-top:.35em}
+.is-dark .softbar{background:transparent;border-color:rgba(255,255,255,.25);color:#A9B6D0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.1em}
+.grid2.wide-l{grid-template-columns:1fr 1.85fr}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1em}
+.grid3.r{grid-template-columns:1.1fr 1.1fr 1fr}
+
+
+/* 캔버스 높이 맞춤 미세조정 (원본 재현층 오버라이드) */
+.statement-bar{padding-top:.52em;padding-bottom:.52em}
+.fine{line-height:1.55}
+.metrics{row-gap:.35em}
+.tl .it p{line-height:1.4}
+
+/* 모바일 : 원본 재현층 컴포넌트 리플로우 */
+@media (max-width:980px){
+  .grid2,.grid2.wide-l,.grid3,.grid3.r{grid-template-columns:1fr !important;gap:.8em}
+  .wm{position:static;margin:.4em 0}
+  .wm.tr{text-align:right}
+  .chart{height:8em;gap:.6em}
+  .chart .seg{font-size:.5em}
+  .legend{flex-wrap:wrap;gap:.6em;row-gap:.25em}
+  .otbl{font-size:.6em}
+  .otbl th,.otbl td{padding:.32em .3em}
+  .pcard img{width:3.1em;height:3.1em}
+  .statpanel{padding:1em}
+  .statpanel .big{font-size:2.1em}
+}
+
+/* 자리표시 — 실제 덱에서는 base64 이미지로 교체한다 */
+.ph{width:3.6em;height:3.6em;border-radius:50%;flex:0 0 auto;
+  background:#C9D0DC;border:2px solid var(--rust)}
+.wmtext{font-weight:800;letter-spacing:.24em;font-size:.8125em;opacity:.55}
+.wmtext.big{font-size:1.6em;letter-spacing:.2em;opacity:1}
 </style>
 </head>
 <body>
 <nav id="dots"></nav>
 <div class="deck">
 
-<!-- ═══ 01 · t-cover ═══════════════════════════════════════════ -->
-<section class="slide"><div class="canvas is-dark t-cover" data-title="COVER">
+<section class="slide"><div class="canvas is-dark" data-title="COVER">
+  <div class="wm cover"><span class="wmtext big">AINEXUS</span></div>
+  <div class="kicker" style="letter-spacing:.22em">AI Revenue Agent &nbsp;·&nbsp; TIPS Briefing &nbsp;·&nbsp; 2026.08</div>
+  <h1 style="font-size:1.85em;letter-spacing:.02em;margin-bottom:.7em">주문 데이터 기반 매출 Action 실행 및 성과학습 체계 구축</h1>
   <div class="body">
-    <div class="brand">브랜드명</div>
-    <div class="cover-meta">한 줄 포지셔닝 · 2026.08</div>
-    <div class="display">핵심 주장을 한 문장으로 —<br>무엇을 누구에게 어떻게.</div>
-    <div class="grid grid-3" style="margin-bottom:1.6em">
-      <div class="card">
-        <div class="card-title">제품군 A</div>
-        <p>구성요소 · 구성요소</p>
-        <p style="margin-top:.5em">핵심 기능 한 줄</p>
-        <p class="accent" style="margin-top:.5em">수익 성격</p>
-      </div>
-      <div class="card">
-        <div class="card-title">제품군 B</div>
-        <p>구성요소 · 구성요소</p>
-        <p style="margin-top:.5em">핵심 기능 한 줄</p>
-        <p class="accent" style="margin-top:.5em">수익 성격</p>
-      </div>
-      <div class="card">
-        <div class="card-title">제품군 C</div>
-        <p>구성요소 · 구성요소</p>
-        <p style="margin-top:.5em">핵심 기능 한 줄</p>
-        <p class="accent" style="margin-top:.5em">수익 성격</p>
-      </div>
+    <div class="grid3" style="margin-bottom:1.4em">
+      <div class="card"><div class="card-title">AI Revenue Agent</div>
+        <p style="color:var(--sub)">주문 흐름 · 판매 Gap · 매장상태 진단</p>
+        <p style="margin-top:.35em">업주 승인형 매출 Action 제안·실행</p>
+        <p class="accent" style="margin-top:.35em">월 구독 · 성과 검증형 AI</p></div>
+      <div class="card"><div class="card-title">Brand-supported Action</div>
+        <p style="color:var(--sub)">게임·미션·쿠폰으로 참여 유도</p>
+        <p style="margin-top:.35em">브랜드 혜택 → 추가주문·구매전환</p>
+        <p class="accent" style="margin-top:.35em">브랜드 비용으로 매장 Action 지원</p></div>
+      <div class="card"><div class="card-title">Order &amp; Payment Data</div>
+        <p style="color:var(--sub)">Action 노출 → 주문 → 결제</p>
+        <p style="margin-top:.35em">실제 주문결과로 효과 측정</p>
+        <p class="accent" style="margin-top:.35em">거래수익 + 학습데이터</p></div>
     </div>
-    <p class="lead" style="margin-bottom:0">보충 설명 첫째 줄 — 무엇을 어떻게 하는지.<br>보충 설명 둘째 줄 — 그래서 무엇이 달라지는지.</p>
-    <div class="statement-bar">이미 확보한 자산으로 시작합니다.</div>
+    <p class="lead" style="font-size:.8125em;line-height:2.1;margin:0 0 1.2em">QR 주문·POS·리뷰 데이터를 AI로 분석해 놓친 매출기회를 찾고, 업주가 바로 실행할 수 있는 Action을 제안합니다.<br>주문 후에는 게임형 광고·이벤트로 소비자의 참여를 유도하고, 주문·결제 결과를 바탕으로 매출 Action을 고도화합니다.</p>
+    <div class="statement-bar">3,800개 음식점 접점과 X-Order 55개 운영매장에서 검증을 시작합니다.</div>
   </div>
-  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>01</span></div>
+  <div class="footer"><span>HOTPL X · AInexus</span><span class="mid"></span><span>01</span></div>
 </div></section>
 
-<!-- ═══ 02 · t-profile ═════════════════════════════════════════ -->
-<section class="slide"><div class="canvas is-dark t-profile" data-title="TEAM &amp; MILESTONES">
+<section class="slide"><div class="canvas is-light" data-title="TEAM &amp; MILESTONES">
   <div class="kicker">Team &amp; Milestones</div>
-  <h1>시장·채널·기술을 이미 확보한 팀</h1>
+  <h1 style="font-size:1.4em">외식업 시장 · 3,800개 매장망 · AI 개발역량을 이미 확보한 창업팀</h1>
   <div class="body">
-    <div class="people">
-      <div class="person">
-        <div class="who">이름</div>
-        <div class="role">CEO · 사업총괄</div>
-        <ul><li>경력 한 줄</li><li>경력 한 줄</li><li>경력 한 줄</li></ul>
+    <div class="grid2" style="gap:1.4em">
+      <div>
+        <div class="pcard">
+          <div class="ph" title="김운성"></div>
+          <div style="flex:1">
+            <div class="nm">김운성 <span>| CEO</span></div>
+            <div class="rl">외식업 마케팅·사업개발 / 운영 총괄</div>
+            <ul><li>대기업 20년 사업·마케팅 · 두산 / 파리크라상</li><li>외식업 특화기업 밸류플러스 12년 운영</li><li>3,800개 음식점 네트워크 구축</li><li>중앙대학교 경영학과 교수 · AI넥서스 설립 (2025)</li></ul>
+            <div class="tagline">— 시장·고객·확산채널을 확보한 외식업·마케팅 전문가</div>
+          </div>
+        </div>
+        <div class="pcard" style="margin-bottom:0">
+          <div class="ph" title="강기훈"></div>
+          <div style="flex:1">
+            <div class="nm">강기훈 <span>| CTO</span></div>
+            <div class="rl">AI·플랫폼 기술개발 총괄</div>
+            <ul><li>서울대학교 전산과학 학사·석사</li><li>25년+ 소프트웨어·블록체인·전자지갑 조직 리딩</li><li>웹·모바일·데이터 플랫폼·상용제품 개발</li><li>AI Revenue Agent·QR·HOTPL X 설계 총괄</li></ul>
+            <div class="tagline">— AI Revenue Agent·QR 주문 플랫폼 구현 25년 경력 책임자</div>
+          </div>
+        </div>
       </div>
-      <div class="person">
-        <div class="who">이름</div>
-        <div class="role">CTO · 기술총괄</div>
-        <ul><li>경력 한 줄</li><li>경력 한 줄</li><li>경력 한 줄</li></ul>
+      <div>
+        <div style="font-size:.8125em;font-weight:700;margin-bottom:.9em">MILESTONES · 마케팅역량 → 외식업 전문성 → 매장망 → AI 기술</div>
+        <div class="tl">
+          <div class="it"><h5><span class="yr">2014–2018</span> 글로벌 브랜드 마케팅 역량 구축</h5><p>밸류플러스 설립 · 디아지오·벤츠·BMW 마케팅·프로모션</p></div>
+          <div class="it"><h5><span class="yr">2019</span> 외식업 전문기업으로 사업 전환</h5><p>음식점 미디어 서비스 ‘핫플튜브’ 출시</p></div>
+          <div class="it"><h5><span class="yr">2020–2024</span> 외식업 매장망·소비자 접점 확보</h5><p>전국 3,800개 음식점 네트워크 · 일평균 약 20만 명 접점</p></div>
+          <div class="it hot"><h5><span class="yr">2025</span> 외식업 경험의 AI 소프트웨어 전환</h5><p>AI넥서스 설립 · QR 주문 운영 · AI Revenue Agent 개발</p></div>
+          <div class="it hot"><h5><span class="yr">2026</span> HOTPL X 통합 사업 본격화</h5><p>AI 매출관리·게임형 광고·결제 통합 및 매장 확산</p></div>
+        </div>
       </div>
     </div>
-    <div class="milestones">
-      <div class="ms"><div class="yr">2019</div><p>마일스톤 한 줄</p></div>
-      <div class="ms"><div class="yr">2022</div><p>마일스톤 한 줄</p></div>
-      <div class="ms"><div class="yr">2024</div><p>마일스톤 한 줄</p></div>
-      <div class="ms"><div class="yr">2026</div><p>마일스톤 한 줄</p></div>
-    </div>
+    <div class="softbar"><span style="color:var(--rust)">실행조직</span> &nbsp;매장운영·광고마케팅 조직 &nbsp;+&nbsp; AI 소프트웨어 개발조직의 결합</div>
+    <div class="statement-bar" style="margin-top:.35em">시장 검증은 <span class="hl">CEO</span>가, 제품 구현은 <span class="hl">CTO</span>가, 매장 확산은 <span class="hl">기존 사업조직</span>이 책임집니다.</div>
   </div>
-  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>02</span></div>
+  <div class="footer"><span>HOTPL X · AInexus</span><span class="mid"></span><span>02</span></div>
 </div></section>
 
-<!-- ═══ 03 · t-cards3 ══════════════════════════════════════════ -->
-<section class="slide"><div class="canvas is-dark t-cards3" data-title="WHY US">
+<section class="slide"><div class="canvas is-light" data-title="WHY US">
+  <div class="wm br"><span class="wmtext">AINEXUS</span></div>
   <div class="kicker">Why Us</div>
-  <h1>우리는 0에서 시작하지 않습니다</h1>
-  <p class="lead">확장의 장벽은 기술만이 아니라 현장 진입이다 — 우리는 그 채널을 이미 갖고 있다.</p>
+  <h1 style="font-size:1.4em">우리는 고객도, 확산 채널도 0에서 시작 하지 않습니다</h1>
+  <p class="lead" style="font-size:.8125em;margin-top:.5em">외식업 AI의 확장 장벽은 기술만이 아니라, 실제 매장에 진입하고 활성화하는 것이다 — 우리는 현장과 영업채널을 이미 갖고 있다.</p>
   <div class="body">
-    <div class="grid grid-3">
-      <div class="card">
-        <div class="card-title"><span class="num">①</span>첫 번째 축</div>
-        <p>무엇을 확보했는지 두 줄 이내로.</p>
-        <div class="hairline"></div>
-        <p class="accent">정량 근거</p>
+    <div class="grid2 wide-l">
+      <div class="statpanel">
+        <div class="cap">이미 확보한</div>
+        <div class="big">3,800<small>개소</small></div>
+        <div class="sub">전국 음식점 접점</div>
+        <hr>
+        <div class="now">현재 실제 운영</div>
+        <div class="row"><span>X-Order 운영</span><b>55개</b></div>
+        <div class="row"><span>광고주 거래중</span><b>4개</b></div>
+        <div class="row"><span>사이니지</span><b>3,800개</b></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span class="num">②</span>두 번째 축</div>
-        <p>무엇을 확보했는지 두 줄 이내로.</p>
-        <div class="hairline"></div>
-        <p class="accent">정량 근거</p>
-      </div>
-      <div class="card">
-        <div class="card-title"><span class="num">③</span>세 번째 축</div>
-        <p>무엇을 확보했는지 두 줄 이내로.</p>
-        <div class="hairline"></div>
-        <p class="accent">정량 근거</p>
+      <div>
+        <div style="font-size:.875em;font-weight:700;margin-bottom:.6em">Distribution Engine — 확산 3채널</div>
+        <div class="chain">
+          <div class="lnk"><span class="nc">1</span><div><h4>Existing Network-미디어 플랫폼 (50인치 대형 모니터)</h4><p>이미 관계를 가진 3,800개 음식점에서 직접 전환</p></div></div>
+          <div class="dn">↓</div>
+          <div class="lnk on"><span class="nc rust">2</span><div><h4>Merchant Referral</h4><p>사용 업주가 웹앱·카톡 [다른 매장 추천] → 추천·설치·전환·리워드 시스템 구축</p></div></div>
+          <div class="dn">↓</div>
+          <div class="lnk"><span class="nc">3</span><div><h4>Wholesaler Channel (2027년)</h4><p>도매상이 거래 중인 음식점에 HOTPL X를 소개·확산</p></div></div>
+        </div>
+        <p class="fine" style="text-align:left;margin-top:.7em;font-weight:700;color:var(--rust)">= 기존망을 시작점으로 업주추천·도매상을 결합한 Referral-led Distribution Engine</p>
+        <p class="fine" style="text-align:left;font-style:normal;margin-top:.15em">검증 KPI: 기존망 전환율 · 추천 활성화율 · 도매상당 월 신규매장 · 채널별 CAC</p>
       </div>
     </div>
+    <p class="fine" style="margin-top:.9em;font-weight:700;color:var(--navy)">3,800개는 영업·미디어 접점 — AI Revenue Agent의 초기 학습·유료전환 모수는 X-Order 55개에서 시작한다.</p>
   </div>
-  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>03</span></div>
+  <div class="footer"><span></span><span class="mid">HOTPL X · TIPS Briefing</span><span>03</span></div>
 </div></section>
-
-<!-- ═══ 04 · t-flow ════════════════════════════════════════════ -->
-<section class="slide"><div class="canvas is-dark t-flow" data-title="핵심 제품">
-  <div class="kicker">Core Product</div>
-  <h1>관찰하고, 진단하고, 실행하고, 학습한다</h1>
-  <p class="lead">각 단계가 무엇을 하는지 한 문장으로 요약합니다.</p>
+<section class="slide"><div class="canvas is-dark" data-title="AI REVENUE AGENT">
+  <div class="wm tr"><span class="wmtext big">HOTPL X</span></div>
+  <div class="kicker">AI Revenue Agent &nbsp;·&nbsp; 핵심 제품</div>
+  <h1 style="font-size:1.4em">진단은 출발점이고, 실행과 성과학습이 HOTPL X의 차별점입니다</h1>
+  <p class="lead" style="font-size:.8125em;margin-top:.5em">현재는 진단·제안에서 시작해, 승인 Action 반영과 효과학습을 단계적으로 고도화합니다.</p>
   <div class="body">
     <div class="flow">
-      <div class="step">
-        <div class="step-head"><span class="num">①</span>OBSERVE</div>
-        <div class="step-sub">상시 수집</div>
-        <ul><li>데이터 소스</li><li>데이터 소스</li><li>데이터 소스</li></ul>
-      </div>
+      <div class="step"><div class="step-head" style="color:#E08C7A">① DIAGNOSE · 현재</div>
+        <div class="step-sub" style="color:#fff;font-size:.75em">주문 데이터로 매출기회를 진단</div>
+        <ul style="border-top:1px solid rgba(255,255,255,.18);padding-top:.6em"><li>QR 주문 · 장바구니</li><li>메뉴별 판매율</li><li>동반주문율 · 객단가</li><li>시간대 · 요일 · 날씨</li></ul></div>
       <div class="arw"></div>
-      <div class="step">
-        <div class="step-head"><span class="num">②</span>DIAGNOSE</div>
-        <div class="step-sub">기회 발견</div>
-        <ul><li>진단 항목</li><li>진단 항목</li><li>진단 항목</li></ul>
-      </div>
+      <div class="step"><div class="step-head" style="color:#E08C7A">② EXECUTE · 개발</div>
+        <div class="step-sub" style="color:#fff;font-size:.75em">업주 승인 Action을 X-Order에 반영</div>
+        <ul style="border-top:1px solid rgba(255,255,255,.18);padding-top:.6em"><li>메뉴 노출순서</li><li>세트 · 추가메뉴</li><li>쿠폰 · 프로모션</li><li>브랜드 게임 · 미션</li><li>재방문 Action</li></ul></div>
       <div class="arw"></div>
-      <div class="step on">
-        <div class="step-head"><span class="num">③</span>ACT<span class="badge">승인 · 실행</span></div>
-        <div class="step-sub">현장 반영</div>
-        <ul><li>실행 항목</li><li>실행 항목</li><li>실행 항목</li></ul>
-      </div>
+      <div class="step on"><div class="step-head" style="color:#E08C7A">③ OPTIMIZE · 파일럿</div>
+        <div class="step-sub" style="color:#fff;font-size:.75em">주문 흐름에 따라 메뉴 Action을 동적으로 선택</div>
+        <ul style="border-top:1px solid rgba(255,255,255,.18);padding-top:.6em"><li>주문 유입속도</li><li>메뉴별 표준 조리시간</li><li>조리라인 부하 가중치</li><li>마진 · 품절 · 고객경험</li><li>제약조건 기반 Action</li></ul></div>
       <div class="arw"></div>
-      <div class="step">
-        <div class="step-head"><span class="num">④</span>LEARN</div>
-        <div class="step-sub">결과 학습</div>
-        <ul><li>측정 항목</li><li>측정 항목</li><li>측정 항목</li></ul>
-      </div>
+      <div class="step"><div class="step-head" style="color:#E08C7A">④ LEARN · 고도화</div>
+        <div class="step-sub" style="color:#fff;font-size:.75em">노출군·미노출군 결과로 순증효과 학습</div>
+        <ul style="border-top:1px solid rgba(255,255,255,.18);padding-top:.6em"><li>Action 노출 여부</li><li>추가주문 전환</li><li>객단가 · 공헌이익</li><li>쿠폰 · 캠페인 전환</li><li>Holdout 비교</li><li>매장별 모델 보정</li></ul></div>
     </div>
-    <div class="statement-bar">앞 단계를 제안하고, 중간을 실행하며, 결과로 다음을 학습합니다.</div>
-    <p class="fine" style="margin-top:.9em">분석 예시 &nbsp; 지표 A 21% / 지표 B 29% → 실행 후 변화 측정 → 다음 추천에 학습</p>
+    <div class="statement-bar">기술 흐름과 구현단계를 분리해 검증하며, 각 단계의 성과는 파일럿 실측으로 대체합니다.</div>
+    <p class="fine" style="margin-top:.8em">첫 검증 사례 &nbsp; 세트·추가메뉴 Action → 주문 세션 Holdout → 순증 추가주문율·공헌이익 측정 → 다음 Action 개선</p>
   </div>
-  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>04</span></div>
+  <div class="footer"><span>HOTPL X · AInexus</span><span class="mid"></span><span>04</span></div>
 </div></section>
 
-<!-- ═══ 05 · t-duo ═════════════════════════════════════════════ -->
-<section class="slide"><div class="canvas is-dark t-duo" data-title="WHY WE WIN">
-  <div class="kicker">Why We Win</div>
-  <h1>거래에서 끝나지 않고 결과까지 학습합니다</h1>
+<section class="slide"><div class="canvas is-light" data-title="TECHNOLOGY → BUSINESS">
+  <div class="wm br"><span class="wmtext">AINEXUS</span></div>
+  <div class="kicker">Technology → Business</div>
+  <h1 style="font-size:1.5em">세 가지 기술 검증이 업주·브랜드·HOTPL X의 수익으로 연결됩니다</h1>
   <div class="body">
-    <div class="duo-wrap" style="display:flex;gap:1.1em;align-items:stretch">
-      <div class="pane">
-        <div class="pane-label">기존 플레이어</div>
-        <ul><li>출발점이 어디인지</li><li>무엇에 집중하는지</li><li>어디서 멈추는지</li></ul>
+    <div class="grid3">
+      <div class="card" style="border-radius:.35em">
+        <div style="display:flex;align-items:center;gap:.7em;margin-bottom:.7em"><span class="nc">1</span>
+          <b style="font-size:.9375em;line-height:1.35">놓친 매출을 찾고,<br>실행을 제안한다</b></div>
+        <p style="font-size:.75em;color:var(--sub);line-height:1.7">먼저 출시해 Action 노출·클릭·추가주문 데이터를 연결하고, 업주가 구독할 만큼의 순증 공헌이익을 검증</p>
+        <div class="tintbox"><p><b>[분석 예시]</b><br>현재 동반주문율 21% / 유사 29%<br>→ 세트 노출 Action 실행 후 변화 측정</p></div>
       </div>
-      <div class="pane">
-        <div class="pane-label">우리의 집중 영역</div>
-        <div class="loop">
-          기회 발견<br><span class="mark">↓</span><br>
-          승인 후 실행<br><span class="mark">↓</span><br>
-          결과 측정<br><span class="mark">↺</span><br>
-          다음 실행에 학습
-        </div>
+      <div class="card" style="border-radius:.35em">
+        <div style="display:flex;align-items:center;gap:.7em;margin-bottom:.7em"><span class="nc rust">2</span>
+          <b style="font-size:.9375em;line-height:1.35">핵심 R&amp;D<br>주문흐름 기반 동적 Action</b></div>
+        <p style="font-size:.75em;color:var(--sub);line-height:1.7">KDS가 없어도 주문속도·표준 조리시간으로 혼잡을 추정하고, 지연메뉴는 낮추고 빠른 고마진 메뉴는 높임</p>
+        <div class="tintbox"><p class="hot">조리지연 메뉴 하향 · 즉시제공 메뉴 상향<br>→ 대기시간·취소율 변화 측정</p></div>
+      </div>
+      <div class="card" style="border-radius:.35em">
+        <div style="display:flex;align-items:center;gap:.7em;margin-bottom:.7em"><span class="nc">3</span>
+          <b style="font-size:.9375em;line-height:1.35">사업 차별화<br>브랜드 지원형 매출 Action</b></div>
+        <p style="font-size:.75em;color:var(--sub);line-height:1.7">브랜드가 게임·미션·쿠폰 비용을 지원하고, 참여가 실제 추가주문으로 연결됐는지 측정</p>
+        <div class="tintbox"><p class="hot">카스 주문 고객 → 게임 참여 → 추가주문 쿠폰<br>→ 실제 추가주문·구매전환 측정</p></div>
       </div>
     </div>
-    <div class="statement-bar">닫힌 루프가 경쟁 우위의 원천입니다.</div>
+    <div class="statement-bar">기술 성능이 매출효과를 만들고, 검증된 성과가 구독·브랜드 매출과 매장 확산을 만듭니다</div>
+    <p class="fine" style="margin-top:.8em;font-style:normal">검증 순서 &nbsp; Action 데이터 연결 → 순증효과 확인 → 유료전환 → 브랜드 캠페인 확대</p>
   </div>
-  <div class="footer"><span>브랜드 · 부제</span><span class="mid"></span><span>05</span></div>
+  <div class="footer"><span></span><span class="mid">HOTPL X · TIPS Briefing</span><span>05</span></div>
 </div></section>
 
-<!-- ═══ 06 · t-bm (라이트) ═════════════════════════════════════ -->
-<section class="slide"><div class="canvas is-light t-bm" data-title="BUSINESS MODEL">
+<section class="slide"><div class="canvas is-light" data-title="COMPETITIVE FOCUS">
+  <div class="wm br"><span class="wmtext">AINEXUS</span></div>
+  <div class="kicker">Competitive Focus</div>
+  <h1 style="font-size:1.5em">경쟁사의 기능 부재가 아니라, 서로 다른 최적화 대상이 차이를 만듭니다</h1>
+  <div class="body">
+    <div class="grid2">
+      <div class="panelbox">
+        <div class="ttl">캐시노트 · 토스플레이스</div>
+        <div class="sub">경영관리와 주문·결제 인프라에서 출발</div>
+        <div class="stack">
+          <div class="bx">캐시노트 &nbsp;매출·입금·비용·상권</div>
+          <div class="dn">↓</div>
+          <div class="bx">토스 &nbsp;상품·주문·결제·POS</div>
+          <div class="dn">↓</div>
+          <div class="bx">분석·예측 또는 운영·결제 효율</div>
+        </div>
+        <div class="foot">각자의 핵심 생태계 확장</div>
+      </div>
+      <div class="panelbox navy">
+        <div class="ttl">HOTPL X · AI Revenue Agent</div>
+        <div class="sub">매출 Action의 실행과 순증효과 학습에 집중</div>
+        <div class="stack">
+          <div class="bx" style="background:#2F4372;border-color:#3E538A;color:#fff">주문맥락·매장상태</div>
+          <div class="bx" style="background:#2F4372;border-color:#3E538A;color:#fff">업주 승인 Action 선택</div>
+          <div class="bx" style="background:#2F4372;border-color:#3E538A;color:#fff">X-Order에서 메뉴·세트·쿠폰 실행</div>
+          <div class="bx" style="background:#2F4372;border-color:#3E538A;color:#fff">브랜드 지원형 게임·미션·혜택</div>
+          <div class="bx" style="background:#2F4372;border-color:#3E538A;color:#fff">추가주문·공헌이익·구매전환</div>
+          <div class="bx on">↺ Holdout 기반 다음 Action 개선</div>
+        </div>
+        <div class="foot">실행·순증효과 중심</div>
+      </div>
+    </div>
+    <div class="softbar"><span style="color:var(--rust)">GTM</span> &nbsp;3,800개 기존 접점 · 업주 추천 · 도매상 채널로 파일럿과 유료전환을 확대</div>
+    <p class="fine" style="margin-top:.7em;font-weight:700;color:var(--navy)">기능 수로 경쟁하지 않습니다. 어떤 Action이 실제 추가매출을 만들었는지 반복 검증하는 구조에 집중합니다.</p>
+    <p class="fine" style="margin-top:.1em">※ 공개자료 기준의 집중영역 비교 · HOTPL X의 효과학습은 파일럿을 통해 축적하는 단계</p>
+  </div>
+  <div class="footer"><span></span><span class="mid">HOTPL X · TIPS Briefing</span><span>06</span></div>
+</div></section>
+<section class="slide"><div class="canvas is-dark" data-title="DATA ADVANTAGE">
+  <div class="kicker">Building the Data Advantage</div>
+  <h1 style="font-size:1.4em">해자를 보유했다고 주장하지 않습니다 — 실행을 반복할수록 복제하기 어려운 데이터가 형성됩니다</h1>
+  <div class="body">
+    <div class="grid2">
+      <div class="panelbox" style="background:var(--panel);border-color:rgba(255,255,255,.18)">
+        <div style="display:flex;align-items:center;gap:.8em;margin-bottom:.9em">
+          <span class="pill soft" style="margin:0">① ACTION-RESULT 축적</span>
+          <span style="font-size:.75em;color:#A9B6D0">매장상황·Action·주문결과를 연결</span></div>
+        <ul style="list-style:none;font-size:.78em;line-height:2.35;color:#C7D0E4">
+          <li>• 주문흐름·매장상황 관측</li><li>↓ 업주 승인형 Action 실행</li>
+          <li>↓ 노출군·미노출군 주문결과 수집</li><li>↓ 순증 추가주문·공헌이익 추정</li>
+          <li>↓ 매장별 가중치·다음 Action 보정 ↺</li></ul>
+      </div>
+      <div class="panelbox" style="background:var(--panel);border-color:rgba(255,255,255,.18)">
+        <div style="display:flex;align-items:center;gap:.8em;margin-bottom:.9em">
+          <span class="pill" style="margin:0">② 성과 기반 확산</span>
+          <span style="font-size:.75em;color:#A9B6D0">검증된 효과가 유료전환과 추천을 촉진</span></div>
+        <ul style="list-style:none;font-size:.78em;line-height:2.35;color:#C7D0E4">
+          <li>• 파일럿으로 검증된 성과</li><li>↓ Pro 유료전환·유지</li>
+          <li>↓ 업주추천·도매상 확산</li><li>↓ 활성매장·브랜드 캠페인 증가</li>
+          <li>↓ 더 다양한 Action 데이터 확보 ↺</li></ul>
+      </div>
+    </div>
+    <div class="softbar" style="border-color:var(--rust)">순환 &nbsp;Action 실행 → 순증효과 검증 → 유료전환·확산 → 더 많은 실행데이터 → 다음 Action 개선 ↺</div>
+    <div class="statement-bar" style="background:var(--panel);color:#fff;margin-top:.5em">HOTPL X는 실제 매장에서 Action을 반복할수록 검증된 Action-Result Data가 축적되는 구조를 만듭니다.<br><span style="font-size:.75em;font-style:italic;font-weight:400;color:#A9B6D0">* 현재는 데이터 구조 구축 단계 · 순증효과는 주문 세션 Holdout과 파일럿 실측으로 검증</span></div>
+  </div>
+  <div class="footer"><span>HOTPL X · AInexus</span><span class="mid"></span><span>07</span></div>
+</div></section>
+
+<section class="slide"><div class="canvas is-light" data-title="BUSINESS MODEL">
+  <div class="wm br"><span class="wmtext">AINEXUS</span></div>
   <div class="kicker">Business Model</div>
-  <h1>핵심 제품을 중심으로 반복수익이 열린다</h1>
+  <h1 style="font-size:1.5em">하나의 Action 실행기술이 업주 구독·브랜드 성과·결제 수익을 동시에 만듭니다</h1>
   <div class="body">
     <div class="bm">
-      <div class="bm-col">
-        <div class="bm-head">수익모델 A</div>
-        <div class="bm-body">
-          <div class="bm-claim">한 줄 정의</div>
-          <div class="bm-row"><span class="k">누가</span><span class="v">고객 세그먼트</span></div>
-          <div class="bm-row"><span class="k">상품</span><span class="v">무엇을 파는지</span></div>
-          <div class="bm-row hot"><span class="k">과금</span><span class="v">월 5만원 · 승인형</span></div>
-          <div class="bm-row"><span class="k">가치</span><span class="v">고객이 얻는 것</span></div>
-        </div>
-      </div>
-      <div class="bm-col">
-        <div class="bm-head">수익모델 B</div>
-        <div class="bm-body">
-          <div class="bm-claim">한 줄 정의</div>
-          <div class="bm-row"><span class="k">누가</span><span class="v">고객 세그먼트</span></div>
-          <div class="bm-row"><span class="k">상품</span><span class="v">무엇을 파는지</span></div>
-          <div class="bm-row hot"><span class="k">과금</span><span class="v">CPC + 성과형</span></div>
-          <div class="bm-row"><span class="k">배분</span><span class="v">수익 배분 구조</span></div>
-        </div>
-      </div>
-      <div class="bm-col">
-        <div class="bm-head">수익모델 C</div>
-        <div class="bm-body">
-          <div class="bm-claim">한 줄 정의</div>
-          <div class="bm-row"><span class="k">수익원</span><span class="v">거래 유형</span></div>
-          <div class="bm-row"><span class="k">상품</span><span class="v">무엇을 파는지</span></div>
-          <div class="bm-row hot"><span class="k">과금</span><span class="v">거래액 × 0.30%</span></div>
-          <div class="bm-row"><span class="k">산식</span><span class="v">월 4,000만 × 30% → 3.6만</span></div>
-        </div>
-      </div>
+      <div class="bm-col"><div class="bm-head">AI SaaS</div><div class="bm-body">
+        <div class="bm-claim">매출 Action을 제안·실행하고 결과를 개선</div>
+        <div class="bm-row"><span class="k">누가</span><span class="v">음식점 업주</span></div>
+        <div class="bm-row"><span class="k">상품</span><span class="v">QR 주문 기반 AI Revenue Agent</span></div>
+        <div class="bm-row hot"><span class="k">과금</span><span class="v">월 5만원 · 업주 승인형</span></div>
+        <div class="bm-row"><span class="k">가치</span><span class="v">순증 공헌이익으로 구독가치 검증</span></div></div></div>
+      <div class="bm-col"><div class="bm-head">Brand-supported Action</div><div class="bm-body">
+        <div class="bm-claim">브랜드 혜택을 추가주문과 구매전환으로 연결</div>
+        <div class="bm-row"><span class="k">누가</span><span class="v">주류·음료·식품 브랜드</span></div>
+        <div class="bm-row"><span class="k">상품</span><span class="v">게임·미션·쿠폰·스탬프 Action</span></div>
+        <div class="bm-row hot"><span class="k">과금</span><span class="v">CPC + Activation (확장 CPE/CPA)</span></div>
+        <div class="bm-row hot"><span class="k">배분</span><span class="v">매체 HOTPL X 70 / 업주 30 · Activation 별도</span></div></div></div>
+      <div class="bm-col"><div class="bm-head">Payment</div><div class="bm-body">
+        <div class="bm-claim">주문이 결제로 끝날 때마다 수익</div>
+        <div class="bm-row"><span class="k">수익원</span><span class="v">주문·결제 거래</span></div>
+        <div class="bm-row"><span class="k">상품</span><span class="v">HOTPL X 통한 주문·결제</span></div>
+        <div class="bm-row hot"><span class="k">과금</span><span class="v">결제 GMV × 0.30%</span></div>
+        <div class="bm-row"><span class="k">산식</span><span class="v">월 4,000만×침투30% → 3.6만</span></div></div></div>
     </div>
-    <div class="statement-bar">A가 도입·유지를 만들고, <span class="hl">B·C가 고객당 수익을 확장한다</span></div>
+    <div class="statement-bar">기술 검증이 AI 구독을 만들고, 브랜드 지원형 Action과 결제가 매장당 수익을 확장합니다</div>
   </div>
-  <div class="footer"><span>브랜드</span><span class="mid">브랜드 · Investor Briefing</span><span>06</span></div>
+  <div class="footer"><span></span><span class="mid">HOTPL X · TIPS Briefing</span><span>08</span></div>
 </div></section>
 
-<!-- ═══ 07 · t-metrics (라이트) ════════════════════════════════ -->
-<section class="slide"><div class="canvas is-light t-metrics" data-title="REVENUE POTENTIAL">
+<section class="slide"><div class="canvas is-dark" data-title="REVENUE POTENTIAL">
   <div class="kicker">Revenue Potential</div>
-  <h1>1,000개 활성 고객 기준 연간 매출 잠재력</h1>
-  <p class="lead">구독료는 고정, 나머지는 이용량에 연동 · 가정은 각주 참조</p>
+  <h1 style="font-size:1.5em">기술이 순증 공헌이익을 만들 때, 1,000개 유료 활성매장 BM이 성립합니다</h1>
+  <p class="lead" style="font-size:.8125em;margin-top:.4em">AI 구독료는 매장당 고정, 미디어·결제 매출은 이용량에 연동 · 미디어 월 10만원/활성매장·결제 30% 침투 가정</p>
   <div class="body">
     <div class="metrics">
       <div></div>
-      <div class="colhead">시나리오 30%</div>
-      <div class="colhead">시나리오 60%</div>
-      <div class="colhead">시나리오 100%</div>
-
-      <div class="rowlabel">구독 (고정)</div>
-      <div class="cell">5.0만</div><div class="cell">5.0만</div><div class="cell">5.0만</div>
-
-      <div class="rowlabel">결제 (30% 가정)</div>
+      <div class="colhead">미디어 판매율 30%</div>
+      <div class="colhead">미디어 판매율 60%</div>
+      <div class="colhead" style="color:#fff">미디어 판매율 100%</div>
+      <div class="rowlabel"><b>AI 구독</b> <span style="opacity:.7">고정</span></div>
+      <div class="cell">5만</div><div class="cell">5만</div><div class="cell">5만</div>
+      <div class="rowlabel">+ <b>결제</b> <span style="opacity:.7">30% 가정</span></div>
       <div class="cell">3.6만</div><div class="cell">3.6만</div><div class="cell">3.6만</div>
-
-      <div class="rowlabel">미디어 (변동)</div>
-      <div class="cell">2.1만</div><div class="cell">4.2만</div><div class="cell">7.0만</div>
-
-      <div class="rowlabel total">고객당 / 월</div>
+      <div class="rowlabel">+ <b>미디어</b> <span style="opacity:.7">판매율 변동</span></div>
+      <div class="cell" style="color:#E08C7A">2.1만</div><div class="cell" style="color:#E08C7A">4.2만</div><div class="cell" style="color:#E08C7A">7.0만</div>
+      <div class="rowlabel total">= 매장당 / 월</div>
       <div class="cell total">10.7만</div><div class="cell total">12.8만</div><div class="cell total">15.6만</div>
+      <div class="rowlabel" style="font-size:.6em;line-height:1.35">× 1,000 × 12 = 연매출</div>
+      <div class="cell" style="color:#E08C7A;font-size:1.05em;font-weight:800">12.84억</div>
+      <div class="cell" style="color:#E08C7A;font-size:1.05em;font-weight:800">15.36억</div>
+      <div class="cell" style="font-size:1.05em;font-weight:800">18.72억</div>
     </div>
-    <div class="statement-bar">× 1,000 고객 × 12개월 = 연 12.8억 ~ 18.7억</div>
-    <p class="fine" style="margin-top:.9em">미디어 월 10만원/활성고객 · 결제 침투 30% 가정. 시나리오는 미디어 판매율 변동.</p>
+    <div class="statement-bar">식자재 없이 연 매출 잠재력 12.8 ~ 18.7억원<br><span style="font-size:.8125em;font-weight:600">핵심 검증 Gate — 월 순증 공헌이익(Action 순증매출×공헌이익률) ÷ 구독료 5만 ≥ 3배</span></div>
+    <p class="fine" style="margin-top:.45em;font-size:.58em">매출 잠재력 기준 — CAC·온보딩·AI추론비·미디어 영업비·Churn 등 비용 미반영 · 미디어매출은 업주 배분 후 당사 몫 기준<br>HOTPL PLAY Activation Fee·CPE/CPA 성과형 매출은 미반영 Upside · 결제 산식: 월매출 4,000만 × 침투율 30% × 순수익률 0.30% = 3.6만</p>
   </div>
-  <div class="footer"><span>브랜드</span><span class="mid">브랜드 · Investor Briefing</span><span>07</span></div>
+  <div class="footer"><span>HOTPL X · AInexus</span><span class="mid"></span><span>09</span></div>
+</div></section>
+<section class="slide"><div class="canvas is-light" data-title="ROADMAP &amp; GATE">
+  <div class="wm br"><span class="wmtext">AINEXUS</span></div>
+  <div class="kicker">기술 검증과 사업 확장을 같은 Gate로 관리합니다</div>
+  <h1 style="font-size:1.6em">현재 → 개발 → 파일럿 → 고도화</h1>
+  <div class="body">
+    <div class="grid3 r">
+      <div class="panelbox navy">
+        <span class="pill">기술·제품 로드맵</span>
+        <div style="font-size:.9375em;font-weight:800;margin:.4em 0 .8em">AI Revenue Agent</div>
+        <ul style="list-style:none;font-size:.72em;line-height:2.15;color:#C7D0E4">
+          <li><b style="color:#fff">현재</b> QR 주문·메뉴·결과 데이터 연결</li>
+          <li><b style="color:#fff">개발</b> 승인 Action의 X-Order 반영</li>
+          <li><b style="color:#fff">파일럿</b> 주문흐름 기반 동적 메뉴 Action</li>
+          <li><b style="color:#fff">검증</b> 주문 세션 Holdout·순증 공헌이익</li>
+          <li><b style="color:#fff">고도화</b> 매장별 학습·POS/KDS 연동</li></ul>
+      </div>
+      <div class="panelbox" style="background:#fff">
+        <div style="text-align:center"><span class="pill">사업화 로드맵</span></div>
+        <div style="font-size:.76em;line-height:1.45">
+          <p style="font-weight:700;margin-top:.3em">1단계 X-Order 파일럿 → 유료전환</p>
+          <p style="font-size:.9em;color:var(--sub);margin-bottom:.7em">기존 접점에서 성과 검증 매장 확보</p>
+          <p style="font-weight:700">2단계 브랜드 지원형 Action 확대</p>
+          <p style="font-size:.9em;color:var(--sub);margin-bottom:.7em">업주추천·초기 도매상 제휴</p>
+          <p style="font-weight:700">3단계 POS/KDS 연동·지역 확산</p>
+          <p style="font-size:.9em;color:var(--sub)">도매상 채널과 셀프 온보딩 확대</p>
+        </div>
+        <div class="tintbox" style="text-align:center;margin-top:.9em"><p>기술 Gate 통과 후 확장<br>파일럿 → 1,000 → 10,000개</p></div>
+      </div>
+      <div class="panelbox" style="background:#fff">
+        <div style="text-align:center"><span class="pill navy" style="width:100%">① AI Revenue 검증 Gate</span></div>
+        <ul style="list-style:none;font-size:.66em;line-height:1.85;color:var(--sub)">
+          <li>· 첫 Action 파일럿 10개+ 매장</li><li>· 사전관찰 2주 + 실행 4주</li>
+          <li>· Action 승인·실행률 30%+</li><li>· 순증 추가주문·공헌이익 검증</li>
+          <li>· 브랜드 참여·구매전환 파일럿</li></ul>
+        <div style="text-align:center;margin-top:.5em"><span class="pill" style="width:100%">② 주방상태 R&amp;D 검증</span></div>
+        <ul style="list-style:none;font-size:.66em;line-height:1.85;color:var(--sub)">
+          <li>· 수동 조리 로그 5~10개 매장</li><li>· 조리지연 예측 MAE·혼잡 분류 정확도</li>
+          <li>· 동적 노출 전후 대기시간 변화</li><li>· 객단가·공헌이익·취소율 변화</li>
+          <li>· KDS 없이 시작, 연동 시 정확도 고도화</li></ul>
+      </div>
+    </div>
+    <div class="statement-bar" style="background:var(--rust);color:#fff">기술 성능을 먼저 매출효과로 검증하고, 검증된 매장에서 유료전환·브랜드 캠페인·확산을 단계적으로 확대합니다.<br><span style="font-size:.8125em;font-weight:400">확장 수치는 목표이며, 활성화율·설치비·CAC·유료전환율은 파일럿 실측으로 확정합니다.</span></div>
+  </div>
+  <div class="footer"><span></span><span class="mid">HOTPL X · TIPS Briefing</span><span>10</span></div>
 </div></section>
 
-<!-- ═══ 08 · t-divider (라이트) ════════════════════════════════ -->
-<section class="slide"><div class="canvas is-light t-divider" data-title="APPENDIX">
-  <div class="body">
-    <div class="kicker">Appendix</div>
+<section class="slide"><div class="canvas is-light" data-title="APPENDIX">
+  <div class="body" style="justify-content:flex-start">
+    <div class="kicker" style="font-size:1.25em;letter-spacing:.22em">Appendix</div>
   </div>
-  <div class="footer"><span>브랜드</span><span class="mid"></span><span>08</span></div>
+  <div class="footer"><span>HOTPL X · AInexus</span><span class="mid"></span><span></span></div>
 </div></section>
 
-<!-- ═══ 09 · t-table (라이트) ══════════════════════════════════ -->
-<section class="slide"><div class="canvas is-light t-table" data-title="APPENDIX · 5개년 추정">
-  <div class="kicker">Appendix · 별첨</div>
-  <h1>고객수 성장에 따른 5개년 매출 추정</h1>
+<section class="slide"><div class="canvas is-dark" data-title="APPENDIX · 별첨 1">
+  <div class="kicker">Appendix · 별첨 1</div>
+  <h1 style="font-size:1.5em">기술 검증 Gate 이후의 5개년 매출 시나리오</h1>
+  <p class="lead" style="font-size:.75em;margin-top:.4em">AI 구독은 순증 공헌이익 검증 후, 브랜드·결제는 실제 사용률 검증 후 확대 · 식자재는 별도 Gate 통과 시 Upside · 단위 억원</p>
   <div class="body">
-    <table class="tbl">
-      <thead>
-        <tr>
-          <th>수익모델</th><th>1년차</th><th>2년차</th><th>3년차</th><th>4년차</th><th>5년차</th><th>성격</th>
-        </tr>
-      </thead>
+    <div class="grid2 wide-l" style="grid-template-columns:1.9fr 1fr">
+      <div>
+        <div class="chart">
+          <div class="col"><div class="seg s4" style="height:0"></div><div class="seg s3" style="height:.2em"></div><div class="seg s2" style="height:.1em"></div><div class="seg s1" style="height:.4em"></div></div>
+          <div class="col"><div class="seg s3" style="height:.8em"><span>9</span></div><div class="seg s2" style="height:.45em"></div><div class="seg s1" style="height:1.2em"><span>14</span></div></div>
+          <div class="col"><div class="seg s4" style="height:1.5em"><span>60</span></div><div class="seg s3" style="height:1.05em"><span>40</span></div><div class="seg s2" style="height:.75em"><span>26</span></div><div class="seg s1" style="height:1.1em"><span>42</span></div></div>
+          <div class="col"><div class="seg s4" style="height:2.6em"><span>150</span></div><div class="seg s3" style="height:1.95em"><span>108</span></div><div class="seg s2" style="height:1.4em"><span>76</span></div><div class="seg s1" style="height:1.7em"><span>92</span></div></div>
+          <div class="col"><div class="seg s4" style="height:4.3em"><span>360</span></div><div class="seg s3" style="height:3.15em"><span>259</span></div><div class="seg s2" style="height:2.45em"><span>202</span></div><div class="seg s1" style="height:2.2em"><span>180</span></div></div>
+        </div>
+        <div style="display:flex;gap:1.6em;padding:0 .5em">
+          <div class="xl" style="flex:1;text-align:center">1년·200</div><div class="xl" style="flex:1;text-align:center">2년·2천</div>
+          <div class="xl" style="flex:1;text-align:center">3년·7천</div><div class="xl" style="flex:1;text-align:center">4년·1.5만</div>
+          <div class="xl" style="flex:1;text-align:center">5년·3만</div>
+        </div>
+        <div class="legend"><span><i class="s1" style="background:#4A5F92"></i>AI SaaS</span><span><i style="background:#8FA0C2"></i>Interactive Media</span><span><i style="background:#2F4372"></i>Payment</span><span><i style="background:#E08C7A"></i>식자재 (Upside·Gate 통과 시)</span></div>
+      </div>
+      <div class="sidecard">
+        <div class="hd">5년차 · 매장 3만개</div>
+        <div class="big">AI Management <b>약 640억</b></div>
+        <div class="big hot">식자재 포함 총 <b>약 1,000억</b></div>
+        <hr>
+        <div class="row"><span>AI SaaS</span><b>180억</b></div>
+        <div class="row"><span>Interactive Media</span><b>200억</b></div>
+        <div class="row"><span>Payment</span><b>260억</b></div>
+        <div class="row hot"><span>식자재 Upside</span><b>360억</b></div>
+        <div class="fn">AI SaaS = 유료 활성매장 × 블렌디드 ARPU 5~6만 × 12개월</div>
+      </div>
+    </div>
+    <p class="fine" style="margin-top:.8em">* 매장 성장 = 기존망 전환 + 업주추천 × 전환율 + 도매상수 × 도매상당 신규매장 · Management Case=AI+미디어+결제(Downside/Upside는 Q&amp;A), 식자재는 3년차 Gate 통과 시 Upside · 모두 추정</p>
+  </div>
+  <div class="footer"><span>HOTPL X · AInexus</span><span class="mid"></span><span>10</span></div>
+</div></section>
+<section class="slide"><div class="canvas is-light" data-title="APPENDIX · 별첨 2">
+  <div class="wm br"><span class="wmtext">AINEXUS</span></div>
+  <div class="kicker">Appendix · 별첨 2</div>
+  <h1 style="font-size:1.5em">수익모델별 5개년 목표 · 모든 가정은 파일럿 실측으로 갱신</h1>
+  <div class="body">
+    <table class="otbl">
+      <thead><tr><th>수익모델</th><th>성격</th><th>1년차<br>매장 200</th><th>2년차<br>매장 2,000</th><th>3년차<br>매장 7,000</th><th>4년차<br>매장 15,000</th><th>5년차<br>매장 30,000</th></tr></thead>
       <tbody>
-        <tr><td>고객수</td><td>200</td><td>2,000</td><td>7,000</td><td>15,000</td><td>30,000</td><td>—</td></tr>
-        <tr><td>수익모델 A</td><td>1.2</td><td>14</td><td>42</td><td>92</td><td>180</td><td>반복</td></tr>
-        <tr><td>수익모델 B</td><td>0.3</td><td>5</td><td>26</td><td>76</td><td>202</td><td>성과</td></tr>
-        <tr><td>수익모델 C</td><td>–</td><td>9</td><td>40</td><td>108</td><td>259</td><td>거래</td></tr>
-        <tr class="accent"><td>합계</td><td>1.5</td><td>28</td><td>108</td><td>276</td><td>641</td><td>단위 억원</td></tr>
+        <tr><td class="lbl">AI SaaS</td><td>반복</td><td>1.2</td><td>14</td><td>42</td><td>92</td><td>180</td></tr>
+        <tr><td class="lbl">Interactive Media</td><td>성과</td><td>0.3</td><td>5</td><td>26</td><td>76</td><td>202</td></tr>
+        <tr class="thin"><td class="sub">· 미디어 판매율(가정)</td><td></td><td class="sub" style="text-align:center">15%</td><td class="sub" style="text-align:center">30%</td><td class="sub" style="text-align:center">44%</td><td class="sub" style="text-align:center">60%</td><td class="sub" style="text-align:center">80%</td></tr>
+        <tr><td class="lbl">Payment</td><td>거래</td><td>–</td><td>9</td><td>40</td><td>108</td><td>259</td></tr>
+        <tr class="thin"><td class="sub">· 결제 침투율(가정)</td><td></td><td class="sub" style="text-align:center">–</td><td class="sub" style="text-align:center">30%</td><td class="sub" style="text-align:center">40%</td><td class="sub" style="text-align:center">50%</td><td class="sub" style="text-align:center">60%</td></tr>
+        <tr><td class="lbl">식자재 (Upside)</td><td>거래</td><td>–</td><td>–</td><td>60</td><td>150</td><td>360</td></tr>
+        <tr class="thin"><td class="sub">· 식자재 참여율(가정)</td><td></td><td class="sub" style="text-align:center">–</td><td class="sub" style="text-align:center">–</td><td class="sub" style="text-align:center">29%</td><td class="sub" style="text-align:center">33%</td><td class="sub" style="text-align:center">40%</td></tr>
+        <tr class="tot"><td class="lbl" style="color:#fff">AI Management 합계</td><td></td><td>1.5</td><td>28</td><td>108</td><td>276</td><td>641</td></tr>
+        <tr class="tot2"><td class="lbl" style="color:#fff">합계 (식자재 Upside 포함)</td><td></td><td>1.5</td><td>28</td><td>168</td><td>426</td><td>1,001</td></tr>
       </tbody>
-      <caption>가정 · 판매율과 침투율은 별도 표 참조 · 시나리오는 Q&amp;A에서 다룸</caption>
     </table>
+    <div class="tintbox" style="margin-top:.9em"><p style="font-size:.6875em;line-height:1.8"><b style="color:var(--rust)">가정</b> &nbsp;AI ARPU 월 5~6만(Pro비중·부가매출 반영) · 미디어 CPC 당사몫 최대 7만×실현율(1년차 0.3억) · Activation Fee 및 CPE/CPA 성과형은 미반영 Upside · 결제 월 4,000만×침투율×0.30% · 식자재 월 GMV 500만×수수료 5%<br>Management Case = AI+미디어+결제 (Downside/Upside 시나리오는 Q&amp;A) / 식자재는 3년차 Gate 통과 시 Upside · 모든 수치는 추정이며 실측으로 대체 필요.</p></div>
   </div>
-  <div class="footer"><span>브랜드</span><span class="mid">브랜드 · Investor Briefing</span><span>09</span></div>
+  <div class="footer"><span></span><span class="mid">HOTPL X · TIPS Briefing</span><span>11</span></div>
+</div></section>
+
+<section class="slide"><div class="canvas is-light" data-title="APPENDIX · 경쟁 포지셔닝">
+  <div class="wm br"><span class="wmtext">AINEXUS</span></div>
+  <div class="kicker">Appendix · 경쟁 포지셔닝</div>
+  <h1 style="font-size:1.5em">토스플레이스·캐시노트와 기능 수가 아닌 최적화 대상이 다릅니다</h1>
+  <div class="body">
+    <table class="otbl">
+      <thead><tr><th style="width:17%">비교 기준</th><th style="width:25%">HOTPL X</th><th>토스플레이스</th><th>캐시노트</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl">출발점</td><td class="hl">매출 Action 실행</td><td>POS·결제·주문 인프라</td><td>경영·금융관리</td></tr>
+        <tr><td class="lbl">최적화 대상</td><td class="hl">추가매출·구매전환</td><td>주문·결제·매장운영 효율</td><td>매출·비용·자금관리</td></tr>
+        <tr class="thin"><td class="sub">핵심 데이터</td><td class="hl" style="font-style:italic">주문맥락·Action·참여·결과</td><td class="sub" style="text-align:center">상품·주문·결제</td><td class="sub" style="text-align:center">매출·입금·비용·상권</td></tr>
+        <tr><td class="lbl">AI 역할</td><td class="hl">Action 선택·실행·효과학습</td><td>운영 편의·자동화</td><td>분석·예측·업주 지원</td></tr>
+        <tr class="thin"><td class="sub">실행 접점</td><td class="hl" style="font-style:italic">X-Order·HOTPL PLAY</td><td class="sub" style="text-align:center">POS·Front·주문환경</td><td class="sub" style="text-align:center">업주용 앱·연결 서비스</td></tr>
+        <tr><td class="lbl">핵심 성과</td><td class="hl">순증매출·공헌이익·브랜드 전환</td><td>처리·결제 효율</td><td>경영 편의·금융관리</td></tr>
+        <tr class="thin"><td class="sub">차별화 자산</td><td class="hl" style="font-style:italic">매장별 Action-Result 축적</td><td class="sub" style="text-align:center">POS·결제 네트워크</td><td class="sub" style="text-align:center">사업자 경영데이터·회원망</td></tr>
+        <tr><td class="lbl">현재 단계</td><td class="hl">진단 현재 / 실행 개발 / 효과학습 파일럿</td><td>상용 서비스·API 생태계</td><td>상용 서비스·AI 매출분석</td></tr>
+      </tbody>
+    </table>
+    <div class="tintbox" style="margin-top:1em;text-align:center"><p style="color:var(--rust);font-weight:700"><b>비교 원칙</b> &nbsp;경쟁사의 기능 부재를 주장하지 않습니다. 공개자료 기준의 주력영역 비교이며, HOTPL X의 효과학습은 파일럿 축적 단계입니다.</p></div>
+  </div>
+  <div class="footer"><span></span><span class="mid">HOTPL X · TIPS Briefing</span><span>12</span></div>
 </div></section>
 
 </div>
