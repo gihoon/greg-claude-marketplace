@@ -1,6 +1,6 @@
 # greg-claude-marketplace
 
-Greg의 Claude Code 스킬 패키지. 지식을 쌓고 → 아이디어로 다듬고 → 결과물로 만들고 → 검증·자동화하는 20개 스킬.
+Greg의 Claude Code 스킬 패키지. 지식을 쌓고 → 아이디어로 다듬고 → 결과물로 만들고 → 검증·자동화하는 22개 스킬.
 
 > **출처**: [kimyoon21/brown-claude-marketplace](https://github.com/kimyoon21/brown-claude-marketplace) · [vibelabs.kr/shared/8](https://vibelabs.kr/shared/8)
 
@@ -230,17 +230,39 @@ Notion 페이지도 입력 가능:
 
 에디토리얼 풀뷰포트 HTML. 스크롤·방향키 탐색. `<주제>_PT.html`로 저장 후 브라우저에서 발표.
 
-### /do-genpt-hotplx — 네이비 러스트 IR 덱
+### /do-hot-pt — 네이비 러스트 IR 덱
 
 **언제**: 투자자·심사역에게 보내는 IR·기업설명·사업계획.
 
 ```
-/do-genpt-hotplx AInexus 시리즈A IR 덱 만들어줘
+/do-hot-pt AInexus 시리즈A IR 덱 만들어줘
 ```
 
 네이비(`#1B2A4A`) 다크 ↔ 화이트 라이트 교차에 러스트(`#9C4A34`) 액센트. 960×540 고정 캔버스,
 모바일에서는 리플로우 + autofit으로 슬라이드 1장이 화면 1페이지에 들어온다.
 수익모델·재무추정·팀 슬라이드 타입 포함.
+
+### /do-hot-report — 네이비 러스트 A4 1p 요약서
+
+**언제**: 심사역·기관이 덱을 열기 전에 먼저 읽는 한 장. TIPS·투자 요약·사업 개요.
+
+```
+/do-hot-report HOTPL X TIPS 투자 요약 1p 만들어줘
+```
+
+A4 실치수 시트(210×297mm)에 제목·태그라인·네이비 섹션바·라벨형 한 줄 항목·줄무늬 표를 담는다.
+본문 9pt의 초고밀도. 1페이지가 기본이고 넘치면 폰트가 아니라 문장을 줄인다.
+
+### /do-hot-pdf — HTML → PDF 렌더
+
+**언제**: 만들어 둔 요약서·덱을 첨부·인쇄용 PDF로 굳힐 때. 내용은 만들지 않는다.
+
+```
+/do-hot-pdf HOTPLX_TIPS_1p.html
+```
+
+`.sheet`면 A4 세로, `.canvas`(960×540 덱)면 슬라이드 1장 = 가로 1페이지로 자동 판별해 렌더.
+덱은 임시 사본에 인쇄 CSS를 주입해 스크롤 스냅·스케일을 푼다 — 원본 HTML은 건드리지 않는다.
 
 ---
 
