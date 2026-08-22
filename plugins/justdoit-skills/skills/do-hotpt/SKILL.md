@@ -1,20 +1,20 @@
 ---
-name: do-genpt-hotplx
+name: do-hotpt
 description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 960×540 고정 캔버스를 뷰포트에 맞춰 스케일하고 모바일에서는 리플로우+autofit, Pretendard, 네이비(#1B2A4A)·패널(#22335A) 다크 ↔ 화이트 라이트 교차 배경, 러스트(#9C4A34) 액센트. cover·profile·cards3·flow·duo·bm·metrics·table·divider 슬라이드 타입. 투자유치·IR·기업설명·사업계획 발표 요청 시 사용.
 ---
 
-# do-genpt-hotplx — 네이비 러스트 IR 덱 생성
+# do-hotpt — 네이비 러스트 IR 덱 생성
 
 투자유치·기업설명을 **IR 덱 수준의 HTML 프레젠테이션**으로 만든다. `HOTPLX_IR_short_최종.html`에서 추출한 디자인 시스템.
 
 ## 트리거
 
-`/do-genpt-hotplx` 또는 IR·투자유치·기업설명·사업계획 발표 요청
+`/do-hotpt` 또는 IR·투자유치·기업설명·사업계획 발표 요청
 
 ## 언제 쓰나
 
 - 투자자·심사역에게 보내는 덱 — 수익모델·재무추정·팀·시장 구조가 들어갈 때
-- (구분) `/do-genpt` = 흑백 에디토리얼 세로 흐름 · **`/do-genpt-hotplx` = 네이비 러스트 IR** · `/do-report` = A4 PDF 리포트
+- (구분) `/do-genpt` = 흑백 에디토리얼 세로 흐름 · **`/do-hotpt` = 네이비 러스트 IR** · `/do-report` = A4 PDF 리포트
 
 ## 형식 (핵심 — 임의 변경 금지)
 
