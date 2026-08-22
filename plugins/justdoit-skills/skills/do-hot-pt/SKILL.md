@@ -112,5 +112,5 @@ description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 96
 ## 참고
 
 - 원형: `HOTPLX_TIPS_IR_tech_business_v3.pdf` — 스켈레톤은 이 PDF 14장을 HTML로 재현한 것이다
-  (0016 HOTPL AI Store DNA / 0016o. 토스 대비 X-ORDER 포지셔닝)
+  (0016 HOTPL AI Store DNA / 0016p. TIPS IR 개발 실행)
 - 자매 스킬: `/do-genpt`(에디토리얼) · `/do-hot-report`(A4 1p) · `/do-hot-pdf`(PDF 렌더)
