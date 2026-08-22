@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>제목 · 1p 요약</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+/* ══════════════════════════════════════════════════════════════
+   do-hot-report — 네이비·러스트 A4 1p 요약서
+   ──────────────────────────────────────────────────────────────
+   ⚠ 절대 규칙: .sheet 는 A4 실치수(210×297mm)에 overflow:hidden 이다.
+     넘치면 잘린다. 넘칠 때는 CSS 를 손대지 말고 문장을 줄인다.
+     그래도 안 되면 .sheet 를 하나 더 추가한다(2p 이상 허용).
+   치수 근거: HOTPLX_TIPS_1p.docx (여백 top 10.9 / 좌우 12 / bottom 9.2mm,
+     본문 9pt #2B2F36, 섹션바 8.5pt, 표 7.5pt)
+   ══════════════════════════════════════════════════════════════ */
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --navy:#1B2A4A;      /* 제목·섹션바·표헤더 */
+  --rust:#9C4A34;      /* 라벨·강조 수치 */
+  --ink:#2B2F36;       /* 본문 */
+  --gray:#6E7681;      /* 부제·각주 */
+  --line:#D7DBE2;      /* 표 테두리 */
+  --zebra:#F1F3F7;     /* 표 줄무늬 */
+}
+
+@page{ size:A4; margin:0 }
+
+html,body{background:#5A6474}
+body{
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;
+  display:flex;flex-direction:column;align-items:center;gap:8mm;padding:8mm 0;
+}
+
+/* ── A4 시트 : 1장 = 1 PDF 페이지 ─────────────────────────────── */
+.sheet{
+  width:210mm;height:297mm;
+  padding:10.9mm 12mm 9.2mm;
+  background:#fff;color:var(--ink);
+  font-size:9pt;line-height:1.19;
+  overflow:hidden;
+  page-break-after:always;
+  box-shadow:0 2mm 8mm rgba(0,0,0,.35);
+}
+.sheet:last-child{page-break-after:auto}
+
+/* ── 머리 ─────────────────────────────────────────────────────── */
+h1{
+  font-size:13pt;font-weight:700;color:var(--navy);
+  letter-spacing:-.01em;margin-bottom:1pt;
+}
+h1 .meta{font-size:8pt;font-weight:400;color:var(--gray);letter-spacing:0}
+
+.tagline{
+  font-size:9.5pt;font-weight:700;color:var(--rust);
+  border-bottom:1px solid var(--navy);
+  padding-bottom:2.5pt;margin-bottom:5.5pt;
+}
+
+/* ── 섹션바 : 네이비 배경 + 흰 볼드. 한 섹션의 시작을 알린다 ──── */
+.secbar{
+  background:var(--navy);color:#fff;
+  font-size:8.5pt;font-weight:700;
+  padding:2.6pt 5pt;margin:5.5pt 0 3pt;
+}
+.sheet > .secbar:first-child{margin-top:0}
+
+/* ── 본문 문단 : [라벨] + 설명 한 줄 ──────────────────────────── */
+p{margin-bottom:2.4pt}
+p:last-child{margin-bottom:0}
+p.tight{margin-bottom:1.8pt}   /* ①②③④ 나열처럼 붙여 쓸 때 */
+p.gap{margin-bottom:4pt}       /* 섹션 마지막 문단 */
+
+.l{font-weight:700;color:var(--navy)}         /* 라벨 — 정의·설계·수치 */
+.lr{font-weight:700;color:var(--rust)}        /* 라벨 — 항목 나열·논점 */
+.l::after,.lr::after{content:"\2002\2002"}    /* 라벨 뒤 고정 간격 */
+b,strong{font-weight:700;color:inherit}
+.hot{font-weight:700;color:var(--rust)}       /* 강조 수치 */
+
+/* ── 표 : 네이비 헤더 + 줄무늬 ────────────────────────────────── */
+table{
+  width:100%;border-collapse:collapse;
+  font-size:7.5pt;line-height:1.25;margin:1pt 0 2pt;
+}
+th,td{border:.25pt solid var(--line);padding:2.2pt 4pt;vertical-align:top;text-align:left}
+thead th{background:var(--navy);color:#fff;font-weight:700}
+tbody tr:nth-child(even){background:var(--zebra)}
+tbody td:first-child{font-weight:700;color:var(--navy)}
+
+/* ── 각주·단서 ────────────────────────────────────────────────── */
+.fine{font-style:italic;color:var(--gray)}
+
+/* ── overflow 경고 : 화면에서만. 넘치면 시트가 빨갛게 보인다 ──── */
+.over{outline:2px solid #E5484D;outline-offset:-2px}
+@media print{
+  html,body{background:#fff}
+  body{display:block;gap:0;padding:0}
+  .sheet{box-shadow:none;margin:0}
+  .over{outline:none}
+}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <h1>회사·제품명 <span class="meta">   문서 성격 · 한 줄 (1p)</span></h1>
+  <p class="tagline">“이 문서 전체를 한 문장으로 요약하는 주장”</p>
+
+  <p class="gap"><span class="l">정의</span>무엇을 하는 무엇인지 한 문장. 핵심 동사만 <b>볼드</b>로 집는다.</p>
+
+  <div class="secbar">  섹션 1 — 부제로 논지를 한 번 더 (괄호로 단서)</div>
+  <p class="tight"><span class="lr">① 항목 [상태]</span>설명 한 줄. 괄호로 근거·지표를 붙인다.</p>
+  <p class="tight"><span class="lr">② 항목 [상태]</span>설명 한 줄.</p>
+  <p class="tight"><span class="lr">③ 항목 [상태]</span>설명 한 줄.</p>
+  <p class="gap"><span class="lr">④ 항목 [상태]</span>설명 한 줄.</p>
+
+  <div class="secbar">  섹션 2 — 표로 보여야 하는 구조</div>
+  <table>
+    <thead>
+      <tr><th style="width:14%">축</th><th style="width:23%">고객 · 과금</th><th>핵심</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>A</td><td>대상 · 단가</td><td>한 줄 설명. 수치는 <span class="hot">굵은 러스트</span>로.</td></tr>
+      <tr><td>B</td><td>대상 · 과금방식</td><td>한 줄 설명.</td></tr>
+      <tr><td>C</td><td>대상 · 요율</td><td>한 줄 설명.</td></tr>
+    </tbody>
+  </table>
+  <p class="gap"><span class="lr">보강 논점</span>표 아래에 붙는 해석 한 줄. 과장 없이 <b>현재 단계</b>를 밝힌다.</p>
+
+  <div class="secbar">  섹션 3 — 3과제·3논점처럼 셋으로 끊기는 내용</div>
+  <p class="tight"><span class="lr">과제 1</span>제목 — 설명.</p>
+  <p class="tight"><span class="lr">과제 2</span>제목 — 설명.</p>
+  <p class="tight"><span class="lr">과제 3</span>제목 — 설명.</p>
+  <p class="gap"><span class="l">설계</span>검증 방법·기간·표본을 가운뎃점으로 나열.</p>
+
+  <div class="secbar">  섹션 4 — 경쟁 · 팀 · 기반</div>
+  <p><span class="lr">경쟁</span>비교 대상과 <b>무엇이 다른지</b>. 상대 기능 부재는 주장하지 않는다.</p>
+  <p class="gap"><span class="lr">기반(현재 실적)</span>검증된 숫자만. 확산 경로는 화살표로.</p>
+
+  <div class="secbar">  섹션 5 — 잠재력 · 로드맵</div>
+  <p><span class="l">잠재력</span>조건 = 결과 <span class="hot">수치</span>(제외항목). 검증 Gate: 기준 ≥ 배수.</p>
+  <p><span class="l">5개년</span>규모 변화 · 합계 추정.</p>
+  <p><span class="l">로드맵</span>1단계 · 2단계 · 3단계.
+     <span class="fine">확장 수치는 목표이며 파일럿 실측으로 확정.</span></p>
+
+</div>
+
+<script>
+/* 넘침 감지 — 화면에서만 빨간 테두리. 넘치면 문장을 줄인다. */
+document.querySelectorAll('.sheet').forEach(function(s){
+  if (s.scrollHeight > s.clientHeight + 1) {
+    s.classList.add('over');
+    console.warn('overflow', s.scrollHeight - s.clientHeight, 'px', s);
+  }
+});
+</script>
+</body>
+</html>

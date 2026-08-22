@@ -1,7 +1,7 @@
 {
   "name": "justdoit-skills",
   "version": "2.0.0",
-  "description": "지식관리(raw→literature→perm→wiki→index→query→lint) + 아이디어(sharpen→productify) + 리포트(report·genpt·hotpt) + 검증·자동화(critique·ingest·relink·refactor·breakdown·compile·research·decide). 총 20개 스킬.",
+  "description": "지식관리(raw→literature→perm→wiki→index→query→lint) + 아이디어(sharpen→productify) + 리포트(report·genpt·hot-pt·hot-report·hot-pdf) + 검증·자동화(critique·ingest·relink·refactor·breakdown·compile·research·decide). 총 22개 스킬.",
   "author": {
     "name": "greg",
     "url": "https://github.com/gihoon"
