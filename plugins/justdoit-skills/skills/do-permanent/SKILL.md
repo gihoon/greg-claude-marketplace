@@ -96,6 +96,8 @@ VAULT_ROOT/
   Step 4: 폴더 생성 (최상위 ID일 때) + 노트 생성 (Write 1회)
   │
   Step 5: cascade.py (Bash 1회)
+  │
+  Step 6: brain.yml 갱신 확인 (있을 때만)
 ```
 
 ---
@@ -239,6 +241,13 @@ cascade.py가 처리하는 것:
 5. 해당 클러스터 wiki 페이지에 1줄 추가
 
 결과: JSON 출력 → 1-3줄 요약 보고.
+
+## Step 6: brain.yml 갱신 확인 (있을 때만)
+
+새 노트를 저장한 폴더(`2 Permanent/<클러스터>/`)에 `brain.yml` 또는 `*-brain.yml`이 이미 존재하는지 확인한다.
+
+- 없으면 아무 것도 하지 않는다 (모든 클러스터 폴더가 brain.yml을 가질 필요는 없다 — `/do-brain` 스킬 참조).
+- 있으면 `/do-brain` 스킬(Step 2~4)을 이어서 실행해 그 파일을 갱신한다. 새로 추가된 노트가 그래프에 반영되지 않으면 그 폴더의 CLAUDE.md가 참조하는 brain.yml이 낡은 채로 남는다.
 
 ---
 

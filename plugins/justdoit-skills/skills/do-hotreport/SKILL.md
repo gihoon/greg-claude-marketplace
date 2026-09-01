@@ -1,20 +1,20 @@
 ---
-name: do-hot-report
+name: do-hotreport
 description: HOTPLX 형식의 네이비·러스트 A4 1p 요약서(HTML)를 생성. 210×297mm 시트에 제목·태그라인·네이비 섹션바·라벨형 한 줄 항목·줄무늬 표·이탤릭 각주로 초고밀도 요약을 담는다. Pretendard, 본문 9pt, 섹션바 8.5pt, 표 7.5pt. TIPS·투자 요약·사업 개요·한 장 브리프 요청 시 사용.
 ---
 
-# do-hot-report — 네이비 러스트 A4 1p 요약서
+# do-hotreport — 네이비 러스트 A4 1p 요약서
 
-사업·제품·투자 내용을 **A4 한 장에 다 넣는 요약서**로 만든다. `HOTPLX_TIPS_1p.docx`에서 추출한 디자인 시스템. `/do-hot-pt`(IR 덱)와 같은 색 팔레트의 문서판.
+사업·제품·투자 내용을 **A4 한 장에 다 넣는 요약서**로 만든다. `HOTPLX_TIPS_1p.docx`에서 추출한 디자인 시스템. `/do-hotpt`(IR 덱)와 같은 색 팔레트의 문서판.
 
 ## 트리거
 
-`/do-hot-report` 또는 TIPS 요약·투자 요약·1p 브리프·사업 개요 한 장 요청
+`/do-hotreport` 또는 TIPS 요약·투자 요약·1p 브리프·사업 개요 한 장 요청
 
 ## 언제 쓰나
 
 - 심사역·기관이 **먼저 읽는 한 장** — 덱을 열기 전에 전체를 파악해야 할 때
-- (구분) `/do-hot-pt` = 16:9 IR 덱 · **`/do-hot-report` = A4 1p 요약서** · `/do-report` = 표지·목차 있는 다페이지 기관 리포트 · `/do-hot-pdf` = 위 결과물의 PDF 렌더
+- (구분) `/do-hotpt` = 16:9 IR 덱 · **`/do-hotreport` = A4 1p 요약서** · `/do-report` = 표지·목차 있는 다페이지 기관 리포트 · `/do-hotpdf` = 위 결과물의 PDF 렌더
 
 ## 형식 (핵심 — 임의 변경 금지)
 
@@ -54,7 +54,7 @@ description: HOTPLX 형식의 네이비·러스트 A4 1p 요약서(HTML)를 생�
    "$CHROME" --headless=new --disable-gpu --window-size=830,1180 \
      --screenshot=out.png "file://$PWD/<주제>_1p.html"
    ```
-   PDF로 넘기려면 `/do-hot-pdf`.
+   PDF로 넘기려면 `/do-hotpdf`.
 
 ## 넘침·여백 판정 (이 형식의 유일한 실패 모드)
 
@@ -74,4 +74,4 @@ description: HOTPLX 형식의 네이비·러스트 A4 1p 요약서(HTML)를 생�
 ## 참고
 
 - 원형: `HOTPLX_TIPS_1p.docx` (0016 HOTPL AI Store DNA / 0016o. 토스 대비 X-ORDER 포지셔닝)
-- 자매 스킬: `/do-hot-pt`(IR 덱) · `/do-hot-pdf`(PDF 렌더) · `/do-report`(다페이지 기관 리포트)
+- 자매 스킬: `/do-hotpt`(IR 덱) · `/do-hotpdf`(PDF 렌더) · `/do-report`(다페이지 기관 리포트)

@@ -13,7 +13,7 @@
 ```
 /do-fleeting → /do-literature → /do-permanent → /do-wiki
                         ↓
-              /do-index  /do-query  /do-lint
+              /do-index  /do-query  /do-lint  /do-brain
 ```
 
 | 스킬 | 설명 |
@@ -25,6 +25,7 @@
 | `/do-index` | 프론트매터 기반 VAULT_INDEX 자동 생성·갱신 (perm·query·lint의 토대) |
 | `/do-query` | 볼트 4-Way 검색 (키워드·태그·클러스터·연결 기준) |
 | `/do-lint` | 볼트 건강 점검 (고아 노트, 깨진 링크, 미처리 raw) |
+| `/do-brain` | 클러스터 폴더를 엔티티-관계 brain.yml로 압축 + 참조용 CLAUDE.md 생성. `/do-permanent`가 새 노트 저장 시 자동 갱신 연동 |
 
 ### 아이디어 파이프라인
 
@@ -43,9 +44,9 @@
 |------|------|
 | `/do-report` | 기관 리서치 리포트를 A4 PDF로 생성 (Chrome headless 렌더) |
 | `/do-genpt` | 에디토리얼 슬라이드 덱(HTML) — 흑백 종이 질감, 세로 스크롤 |
-| `/do-hot-pt` | 네이비 러스트 IR 덱(HTML) — 다크↔라이트 교차 16:9, 투자유치 |
-| `/do-hot-report` | 네이비 러스트 A4 1p 요약서(HTML) — 초고밀도 한 장 브리프 |
-| `/do-hot-pdf` | 완성된 HTML을 PDF로 렌더 — 문서(A4 세로)·덱(16:9 가로) 자동 판별 |
+| `/do-hotpt` | 네이비 러스트 IR 덱(HTML) — 다크↔라이트 교차 16:9, 투자유치 |
+| `/do-hotreport` | 네이비 러스트 A4 1p 요약서(HTML) — 초고밀도 한 장 브리프 |
+| `/do-hotpdf` | 완성된 HTML을 PDF로 렌더 — 문서(A4 세로)·덱(16:9 가로) 자동 판별 |
 
 ### 검증·자동화
 

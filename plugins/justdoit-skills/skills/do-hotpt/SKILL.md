@@ -1,20 +1,20 @@
 ---
-name: do-hot-pt
+name: do-hotpt
 description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 960×540 고정 캔버스를 뷰포트에 맞춰 스케일하고 모바일에서는 리플로우+autofit, Pretendard, 네이비(#1B2A4A)·패널(#22335A) 다크 ↔ 화이트 라이트 교차 배경, 러스트(#9C4A34) 액센트. 표지·팀연혁(원형사진+타임라인)·통계패널·4단계 흐름·원형번호 카드·경쟁대비 패널·순환루프·수익모델·단가표·로드맵Gate·누적막대차트·다년추정표 14종 레이아웃. 투자유치·IR·기업설명·사업계획 발표 요청 시 사용.
 ---
 
-# do-hot-pt — 네이비 러스트 IR 덱 생성
+# do-hotpt — 네이비 러스트 IR 덱 생성
 
 투자유치·기업설명을 **IR 덱 수준의 HTML 프레젠테이션**으로 만든다. `HOTPLX_IR_short_최종.html`에서 추출한 디자인 시스템.
 
 ## 트리거
 
-`/do-hot-pt` 또는 IR·투자유치·기업설명·사업계획 발표 요청
+`/do-hotpt` 또는 IR·투자유치·기업설명·사업계획 발표 요청
 
 ## 언제 쓰나
 
 - 투자자·심사역에게 보내는 덱 — 수익모델·재무추정·팀·시장 구조가 들어갈 때
-- (구분) `/do-genpt` = 흑백 에디토리얼 세로 흐름 · **`/do-hot-pt` = 네이비 러스트 IR** · `/do-report` = A4 PDF 리포트
+- (구분) `/do-genpt` = 흑백 에디토리얼 세로 흐름 · **`/do-hotpt` = 네이비 러스트 IR** · `/do-report` = A4 PDF 리포트
 
 ## 형식 (핵심 — 임의 변경 금지)
 
@@ -113,4 +113,4 @@ description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 96
 
 - 원형: `HOTPLX_TIPS_IR_tech_business_v3.pdf` — 스켈레톤은 이 PDF 14장을 HTML로 재현한 것이다
   (0016 HOTPL AI Store DNA / 0016p. TIPS IR 개발 실행)
-- 자매 스킬: `/do-genpt`(에디토리얼) · `/do-hot-report`(A4 1p) · `/do-hot-pdf`(PDF 렌더)
+- 자매 스킬: `/do-genpt`(에디토리얼) · `/do-hotreport`(A4 1p) · `/do-hotpdf`(PDF 렌더)
