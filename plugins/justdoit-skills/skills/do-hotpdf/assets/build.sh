@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# do-hot-pdf — HTML → PDF 렌더
+# do-hotpdf — HTML → PDF 렌더
 #
 #   bash build.sh <input.html> [out.pdf]
 #
