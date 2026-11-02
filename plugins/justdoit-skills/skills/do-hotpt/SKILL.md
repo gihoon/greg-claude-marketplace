@@ -74,12 +74,12 @@ description: HOTPLX IR 형식의 네이비·러스트 IR 덱(HTML)을 생성. 96
 4. 표지 → 팀·연혁 → 자산 → 제품 → 경쟁 → 수익모델 → 수치 → APPENDIX 구분 → 부록 순. **한 슬라이드 = 한 메시지.**
 5. `.is-dark`/`.is-light`를 교차 배치. 각 `<div class="canvas">`의 `data-title`은 우측 dots 툴팁이 된다.
 6. `.footer` 페이지번호를 `01`…`N`으로, `<title>`·표지 텍스트를 주제에 맞게.
-7. **저장**: `<주제>_IR.html`.
+7. **저장**: `<주제>_PT.html`.
 8. **렌더 검증** — 눈으로 본다. 오라클 없이 "잘 나왔다"고 하지 않는다:
    ```bash
    CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
    "$CHROME" --headless --disable-gpu --window-size=1120,700 \
-     --screenshot=out.png "file://$PWD/<주제>_IR.html"
+     --screenshot=out.png "file://$PWD/<주제>_PT.html"
    ```
 9. **넘침 측정** — 위 「함정」의 두 식(`body 내부 넘침`·`푸터 침범`)을 14장 전부에 돌린다. 눈으로만 보면 놓친다.
 10. **모바일 확인**: headless Chrome은 `--window-size`에 **최소 너비 500px을 강제**한다. 390px을 재려면 `<iframe width=390 height=844>`로 감싼 페이지를 렌더한다. 넘치면 **문장을 줄인다** — 폰트를 줄이지 않는다.
