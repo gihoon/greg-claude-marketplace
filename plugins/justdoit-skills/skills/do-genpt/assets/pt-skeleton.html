@@ -20,6 +20,7 @@
   --black: #0b0b0b;
 }
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--fg); font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 .deck { width: 100vw; height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
 .slide { position: relative; width: 100vw; height: 100vh; min-height: 720px; padding: 54px 76px 64px; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; background: var(--paper); border-bottom: 1px solid var(--line); }
@@ -105,10 +106,12 @@ li { color: var(--muted); font-size: 20px; line-height: 1.7; letter-spacing: -0.
       안 덮으면 그 서브트리만 축소를 무시해 autofit이 통째로 실패한다. */
 @media (max-width: 980px) {
   html, body { overflow: hidden; }
-  .deck { height: 100vh; height: 100dvh; }
+  /* 높이는 JS 가 innerHeight 로 측정한 --vh. 100vh 는 iOS 툴바를 포함하고
+     100dvh 는 카카오톡 인앱·구형 iOS 가 몰라 슬라이드 위아래가 가려진다. */
+  .deck { height: var(--vh, 100vh); }
   .slide {
     font-size: 15px;
-    width: 100vw; height: 100vh; height: 100dvh; min-height: 0;
+    width: 100vw; height: var(--vh, 100vh); min-height: 0;
     padding: 26px 18px 34px;
     justify-content: flex-start;
     overflow: hidden;
@@ -361,18 +364,37 @@ slides.forEach((_, i) => {
 const dots = Array.from(document.querySelectorAll('.dot'));
 function currentIndex() { return Math.round(deck.scrollTop / deck.clientHeight); }
 
+/* 실제 보이는 높이 : 주소창·툴바를 뺀 innerHeight 를 --vh 로 고정 */
+function setVh() { document.documentElement.style.setProperty('--vh', window.innerHeight + 'px'); }
+
+/* 넘침 판정 : scrollHeight 에 더해, 본문 요소가 하단 푸터(절대배치)를 침범하는지까지 본다 */
+function overflows(s) {
+  if (s.scrollHeight > s.clientHeight + 1) return true;
+  const f = s.querySelector('.footer');
+  if (!f) return false;
+  const limit = f.getBoundingClientRect().top;
+  for (const el of s.children) {
+    if (el === f) continue;
+    const b = el.getBoundingClientRect();
+    if (b.height && b.bottom > limit + 1) return true;
+  }
+  return false;
+}
+
 /* 모바일: 슬라이드 내용이 한 화면을 넘치면 기준 폰트를 줄여 맞춘다 */
 function fitMobile() {
+  setVh();
   const mobile = window.matchMedia('(max-width: 980px)').matches;
   slides.forEach((s) => {
     if (!mobile) { s.style.fontSize = ''; s.style.justifyContent = ''; return; }
     s.style.justifyContent = 'flex-start';   // 위 정렬 상태에서 측정해야 넘침이 잡힌다
     let size = 15;
     s.style.fontSize = size + 'px';
-    while (s.scrollHeight > s.clientHeight && size > 8) {
+    while (overflows(s) && size > 8) {
       size -= 0.25;
       s.style.fontSize = size + 'px';
     }
+    if (overflows(s)) console.warn('mobile overflow at 8px — 문장을 줄일 것:', s.className);
     s.style.justifyContent = 'center';       // 다 들어간 뒤 세로 가운데 정렬
   });
 }
@@ -380,6 +402,9 @@ fitMobile();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitMobile);
 let fitTimer;
 window.addEventListener('resize', () => { clearTimeout(fitTimer); fitTimer = setTimeout(fitMobile, 150); });
+window.addEventListener('orientationchange', () => setTimeout(fitMobile, 300));
+if (window.visualViewport) window.visualViewport.addEventListener('resize', () => { clearTimeout(fitTimer); fitTimer = setTimeout(fitMobile, 150); });
+window.addEventListener('load', fitMobile);
 function updateDots() { const idx = Math.max(0, Math.min(slides.length - 1, currentIndex())); dots.forEach((dot, i) => dot.classList.toggle('active', i === idx)); }
 deck.addEventListener('scroll', () => window.requestAnimationFrame(updateDots));
 function go(delta) { const idx = Math.max(0, Math.min(slides.length - 1, currentIndex() + delta)); slides[idx].scrollIntoView({ behavior: 'smooth' }); }

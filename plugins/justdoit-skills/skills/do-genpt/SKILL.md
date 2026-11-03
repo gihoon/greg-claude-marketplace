@@ -30,7 +30,10 @@ description: agent_payments_PT.html 형식의 에디토리얼 슬라이드 덱(H
 `≤980px`에서 각 슬라이드가 **스크롤 없이 화면 한 장에 들어온다.** 데스크톱 렌더링은 영향 없음.
 
 - 모바일 모든 크기는 `.slide`의 base `font-size`에 대한 **`em`으로 정의**되고, `fitMobile()`이 넘치는 슬라이드만 15px → 8px까지 0.25씩 줄여 맞춘 뒤 세로 가운데 정렬한다.
-- 높이는 `100dvh` — 모바일 주소창 숨김/표시에 따른 잘림 방지.
+- **높이는 `var(--vh)`** — `setVh()`가 `window.innerHeight`(주소창·툴바를 뺀 실제 보이는 높이)를 `--vh`로 넣는다. `100vh`는 iOS 툴바까지 포함하고 `100dvh`는 카카오톡 인앱·구형 iOS가 몰라 **슬라이드 위아래가 가려진다** — 모바일 높이에 둘 다 직접 쓰지 않는다.
+- **재계산 시점**: `resize` · `orientationchange` · `visualViewport.resize` · `load` · `document.fonts.ready`(Pretendard가 늦게 오면 맞춘 크기가 넘침).
+- **넘침 판정 `overflows()`**: `scrollHeight`에 더해 본문이 절대배치 `.footer`를 침범하는지까지 본다. 8px에서도 넘치면 콘솔에 `mobile overflow at 8px` 경고.
+- `text-size-adjust:100%`로 iOS 가로 모드 글자 자동 확대 차단.
 - 표(`.plain-table`)는 행 단위 세로 적층, 5·6열 그리드는 2열, 다이어그램(`.flow-area`·`.channel-grid`·`.layer`)은 1열로 전환.
 
 > ⚠️ **새 컴포넌트를 추가하면 절대 px 폰트를 모바일 블록에서 `em`으로 반드시 덮을 것.**
@@ -70,7 +73,8 @@ description: agent_payments_PT.html 형식의 에디토리얼 슬라이드 덱(H
 6. `<title>`·표지 `h1`·`.kicker`를 주제에 맞게.
 7. **저장**: `<주제>_PT.html` (예: `baaam_PT.html`).
 8. **열기**: 브라우저로 확인. PDF가 필요하면 브라우저 인쇄(가로·배경 그래픽 켜기).
-9. **모바일 확인**: 창을 좁히거나(≤980px) 개발자도구 기기 모드로 **모든 슬라이드가 스크롤 없이 한 화면에 들어오는지** 본다. 넘친다면 그 슬라이드의 내용이 과밀한 것이므로 **문장을 줄인다** — CSS를 손대지 않는다.
+9. **모바일 확인**: **전체 화면 높이(844)가 아니라 실제 보이는 높이로 잰다** — `390×664`(iPhone + Safari 툴바) · `375×548`(SE + 툴바) · `360×640`(Android) · `320×480`(최소). headless Chrome은 창 너비 500px 미만을 못 만들므로 `<iframe width=390 height=664>`로 감싸 렌더한다. 판정: ① 본문이 `.footer`를 침범하지 않음 ② 슬라이드 높이 = 뷰포트 높이 ③ `mobile overflow at 8px` 경고 없음. 넘친다면 그 슬라이드의 내용이 과밀한 것이므로 **문장을 줄인다** — CSS를 손대지 않는다.
+   zsh에서 크기 목록을 돌릴 때는 `for w h in 390 664 375 548; do …`로 쓴다(`set -- $wh`는 단어 분리가 안 됨).
 
 ## 원칙
 
