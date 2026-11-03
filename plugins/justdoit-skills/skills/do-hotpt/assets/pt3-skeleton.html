@@ -26,6 +26,7 @@
   --stage:#0E1626;          /* 캔버스 바깥 무대 */
 }
 
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{height:100%;background:var(--stage)}
 body{
   scroll-snap-type:y mandatory;overflow-y:scroll;scroll-behavior:smooth;
@@ -234,9 +235,13 @@ h1{font-size:1.5em;font-weight:700;line-height:1.34;letter-spacing:-.02em;margin
    ══════════════════════════════════════════════════════════════ */
 @media (max-width:980px){
   html,body{overflow-y:scroll}
-  .slide{height:100dvh}
+  /* 높이는 100vh/100dvh 가 아니라 JS 가 innerHeight 로 측정한 --vh 를 쓴다.
+     카카오톡 인앱·구형 iOS 는 dvh 를 모르고, 100vh 는 주소창·툴바까지 포함해
+     슬라이드 위아래가 가려진다. */
+  body{height:var(--vh,100vh)}
+  .slide{height:var(--vh,100vh)}
   .canvas{
-    width:100%;height:100dvh;
+    width:100%;height:var(--vh,100vh);
     transform:none;box-shadow:none;
     padding:2em 1.35em 1.5em;
     font-size:15px;                 /* fitMobile() 이 15 → 8 로 조절 */
@@ -248,9 +253,10 @@ h1{font-size:1.5em;font-weight:700;line-height:1.34;letter-spacing:-.02em;margin
      안 줄어들어 넘침이 캔버스까지 전파된다. */
   .body{flex:1 0 auto}
   .grid-2,.grid-3,.grid-4,.bm,.people{grid-template-columns:1fr}
-  .flow{flex-direction:column}
-  .flow .arw{padding:.15em 0}
-  .flow .arw::before{content:"↓"}
+  /* 4단계 흐름은 세로 1열로 쌓으면 화면 높이를 넘는다 → 2×2 격자, 화살표 숨김
+     (단계 순서는 step-head 의 ①②③④ 번호가 전달한다) */
+  .flow{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
+  .flow .arw{display:none}
   .duo-wrap{flex-direction:column}
   .metrics{grid-template-columns:5.5em repeat(3,1fr);gap:.35em .5em}
   .milestones{flex-wrap:wrap}
@@ -902,6 +908,29 @@ h1{font-size:1.5em;font-weight:700;line-height:1.34;letter-spacing:-.02em;margin
 
   /* 모바일 autofit : 넘치는 캔버스만 base font-size 를 줄인다.
      모든 치수가 em 이므로 이 한 줄이 전체를 축소한다. */
+  /* 실제 보이는 높이 : 주소창·툴바를 뺀 innerHeight 를 --vh 로 고정 */
+  function setVh(){
+    document.documentElement.style.setProperty('--vh', window.innerHeight + 'px');
+  }
+
+  /* 넘침 판정 : scrollHeight 만 믿지 않는다. 본문 요소가 푸터(없으면 하단 패딩)를
+     침범하거나 캔버스 위·아래 밖으로 나가면 넘친 것으로 본다. */
+  function overflows(c){
+    if (c.scrollHeight > c.clientHeight + 1) return true;
+    var r = c.getBoundingClientRect();
+    var f = c.querySelector('.footer');
+    var limit = f ? f.getBoundingClientRect().top
+                  : r.bottom - (parseFloat(getComputedStyle(c).paddingBottom) || 0);
+    var els = c.querySelectorAll('.body *, h1, .lead, .kicker');
+    for (var i = 0; i < els.length; i++) {
+      var b = els[i].getBoundingClientRect();
+      if (!b.height) continue;
+      if (b.top < r.top - 1) return true;
+      if (!(f && f.contains(els[i])) && b.bottom > limit + 1) return true;
+    }
+    return false;
+  }
+
   function fitMobile(){
     if (window.innerWidth > MOBILE) {
       canvases.forEach(function(c){ c.style.removeProperty('font-size'); });
@@ -910,10 +939,11 @@ h1{font-size:1.5em;font-weight:700;line-height:1.34;letter-spacing:-.02em;margin
     canvases.forEach(function(c){
       var fs = 15;
       c.style.fontSize = fs + 'px';
-      while (c.scrollHeight > c.clientHeight + 1 && fs > 8) {
+      while (overflows(c) && fs > 8) {
         fs -= 0.25;
         c.style.fontSize = fs + 'px';
       }
+      if (overflows(c)) console.warn('mobile overflow at 8px — 문장을 줄일 것:', c.dataset.title);
     });
   }
 
@@ -947,9 +977,13 @@ h1{font-size:1.5em;font-weight:700;line-height:1.34;letter-spacing:-.02em;margin
     slides[t].scrollIntoView({behavior:'smooth'});
   });
 
-  function relayout(){ scale(); fitMobile(); }
+  function relayout(){ setVh(); scale(); fitMobile(); }
   window.addEventListener('resize', relayout);
+  window.addEventListener('orientationchange', function(){ setTimeout(relayout, 300); });
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', relayout);
   window.addEventListener('load', relayout);
+  /* 웹폰트(Pretendard)가 늦게 오면 글자 폭이 바뀌어 맞춰 둔 크기가 넘친다 → 재계산 */
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
   relayout();
 })();
 </script>
